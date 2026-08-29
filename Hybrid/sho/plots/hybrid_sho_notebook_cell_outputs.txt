@@ -1,0 +1,1988 @@
+
+
+ts2hybrid_jax_SHO_consensus0_001_sysidx0.ipynb
+Cell 1, output 1:
+✓ All required libraries imported and configured.
+
+Cell 2, output 1:
+Configured Damped Harmonic Motion Data (Paper Baseline) - JAX:
+  State: 1D [q, q_dot] | ω: 1.0 | a (damping): 0.02
+  Trajectories: 40 × 201 points = 8040 point pairs
+  Initial conditions: Uniform in [-1, 1]²
+
+Cell 3, output 1:
+Generating damped harmonic motion data (40 trajectories × 200 points)...
+✓ Data generated: 40 × 201 = 8000 pairs
+  Train/Test: 4000 / 4000
+  Reference trajectory (Trajectory 0): q₀=-0.0226, q̇₀=0.3596
+
+Cell 4, output 1:
+--- Damped Harmonic Motion Data Summary ---
+Physics Setup:
+  System: 1D Damped Harmonic Oscillator
+  EOM: q̈ + aq̇ + ω²q = 0  (where a=0.02, ω=1.0)
+  Initial conditions: Uniform in [-1, 1]²
+
+Dataset Configuration (matches GLNN paper Table 1):
+  Trajectories: 40
+  Points per trajectory: 201
+  Time step (dt): 0.05
+  Total point pairs: 8000
+  Train/Test split: 1:1 → Train=4000, Test=4000
+
+[Raw Statistics: Mean | Std | Min | Max]
+  Position q:  0.0648 | 0.2276 | -0.3433 | 0.3542
+  Velocity q̇: -0.0121 | 0.2478 | -0.3487 | 0.3599
+
+[Derivative (Target) Statistics]
+  Mean: [ 0.064122 -0.015306]
+  Std:  [0.228089 0.247096]
+
+[Physics Verification]
+  Position-Velocity correlation: 0.0336 (weak, expected for oscillatory motion)
+  Velocity magnitude (train): mean=0.2245, std=0.1056
+-------------------------------------------
+
+Cell 5, output 1:
+Total dataset size    : 4000 points
+Active points (>1e-4) : 4000 points
+Dead points (≤1e-4)   : 0 (0.00%)
+
+Cell 5, output 2:
+[text/plain]
+<Figure size 1200x800 with 2 Axes>
+[image/png] (87665 encoded characters)
+
+Cell 5, output 3:
+[text/plain]
+<Figure size 1000x500 with 1 Axes>
+[image/png] (29085 encoded characters)
+
+Cell 6, output 1:
+GLNN configured : DOF=1  dt=0.0333s  EPS=0.001
+L-net           : 3x Dense(200)-Softplus → scalar (Lagrangian)
+F-net           : 3x Dense(200)-Softplus → 1D (Non-conservative Forces)
+
+Cell 7, output 1:
+Using device: cuda:0
+
+================================================================================
+                        STARTING MASS ENSEMBLE TRAINING                         
+================================================================================
+Device: cuda:0
+Ensemble Size: 2 systems
+
+━━━ Training System ━━━
+Stage 1: Warmup (10000 iterations)
+[Iter   500] Comb_Loss: 7.60e-03 | Sys MSEs: [3.66e-07, 2.61e-07] | Total Time: 0.27 min
+[Iter  1000] Comb_Loss: 7.00e-03 | Sys MSEs: [2.63e-07, 1.37e-07] | Total Time: 0.40 min
+[Iter  1500] Comb_Loss: 6.21e-03 | Sys MSEs: [1.77e-07, 8.72e-08] | Total Time: 0.52 min
+[Iter  2000] Comb_Loss: 5.34e-03 | Sys MSEs: [1.16e-07, 8.65e-08] | Total Time: 0.65 min
+[Iter  2500] Comb_Loss: 4.51e-03 | Sys MSEs: [7.83e-08, 2.84e-07] | Total Time: 0.78 min
+[Iter  3000] Comb_Loss: 3.75e-03 | Sys MSEs: [6.94e-08, 5.29e-08] | Total Time: 0.90 min
+[Iter  3500] Comb_Loss: 3.08e-03 | Sys MSEs: [2.02e-07, 4.26e-08] | Total Time: 1.03 min
+[Iter  4000] Comb_Loss: 2.49e-03 | Sys MSEs: [1.63e-08, 5.44e-09] | Total Time: 1.15 min
+[Iter  4500] Comb_Loss: 1.99e-03 | Sys MSEs: [1.35e-08, 1.11e-07] | Total Time: 1.28 min
+[Iter  5000] Comb_Loss: 1.57e-03 | Sys MSEs: [4.18e-06, 5.53e-09] | Total Time: 1.40 min
+[Iter  5500] Comb_Loss: 1.22e-03 | Sys MSEs: [1.20e-08, 5.27e-09] | Total Time: 1.53 min
+[Iter  6000] Comb_Loss: 9.35e-04 | Sys MSEs: [1.23e-08, 2.61e-07] | Total Time: 1.65 min
+[Iter  6500] Comb_Loss: 7.01e-04 | Sys MSEs: [7.28e-08, 6.00e-09] | Total Time: 1.78 min
+[Iter  7000] Comb_Loss: 5.11e-04 | Sys MSEs: [1.09e-08, 7.69e-09] | Total Time: 1.91 min
+[Iter  7500] Comb_Loss: 3.68e-04 | Sys MSEs: [1.39e-08, 5.19e-06] | Total Time: 2.04 min
+[Iter  8000] Comb_Loss: 2.48e-04 | Sys MSEs: [9.26e-09, 9.28e-09] | Total Time: 2.16 min
+[Iter  8500] Comb_Loss: 1.64e-04 | Sys MSEs: [1.01e-08, 1.15e-08] | Total Time: 2.29 min
+[Iter  9000] Comb_Loss: 1.05e-04 | Sys MSEs: [7.22e-09, 1.75e-08] | Total Time: 2.41 min
+[Iter  9500] Comb_Loss: 7.18e-05 | Sys MSEs: [2.16e-07, 2.42e-06] | Total Time: 2.54 min
+[Iter 10000] Comb_Loss: 4.74e-05 | Sys MSEs: [7.48e-09, 2.69e-07] | Total Time: 2.66 min
+
+✅ Ensemble Training complete.
+================================================================================
+Training complete in 2.71 minutes.
+Model object is available as `dnn`.
+Model weights are available as `final_params`.
+Loss history available as `loss_arr` (10000 points).
+================================================================================
+
+Cell 8, output 1:
+✓ Evaluation utilities loaded (JAX simplified wrapper - Single System Evaluation).
+
+Cell 9, output 1:
+Automatically selected best_sys_idx: 0 (Train MSE: 4.5928e-10)
+
+One-Step MSE:
+  Train: 4.5928e-10
+  Test:  4.5928e-10
+  Gap:   0.0%
+
+✓ Integrating LNN dynamics using ODE solver:
+  Initial condition: q=-0.0226, q̇=0.3596
+  Integration time: t ∈ [0.000, 10.000] seconds
+  Number of evaluation points: 201
+
+Cell 10, output 1:
+[text/plain]
+<Figure size 1500x800 with 6 Axes>
+[image/png] (236929 encoded characters)
+
+Cell 10, output 2:
+
+======================================================================
+         DAMPED HARMONIC OSCILLATOR - RK4 ROLLOUT DIAGNOSTICS         
+======================================================================
+Model:                ts_2 wc=0.001
+Short Trajectory:     201 timesteps (10.050 s)
+Mean position error:  3.1686e-04
+Max position error:   9.0796e-04
+Mean velocity error:  3.3665e-04
+Max velocity error:   1.0864e-03
+----------------------------------------------------------------------
+Long Trajectory (E):  1001 timesteps (50.000 s)
+System: ω=1.00, damping=0.0200
+
+Ground Truth Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.023996
+  Energy loss:    0.040913 (63.03%)
+
+Model Predicted Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.023683
+  Energy drift:   -0.041226
+  Energy loss:    0.041226 (63.51%)
+
+Energy Prediction Error:
+  Mean error:     1.893741e-04
+  Max error:      3.993437e-04
+======================================================================
+
+Cell 11, output 1:
+
+Training Summary:
+  System: ω=1.0, a=0.02
+  Data: 40 × 201 points
+  Train/Test: 4000 / 4000
+  Ensemble Size: 2 systems
+
+Performance (Evaluated on System 0):
+  Train MSE: 4.5928e-10
+  Test MSE:  4.5928e-10
+  Gap:       0.0%
+
+Model Size:
+  Per-System Parameters: 41,006
+  Total Ensemble Parameters: 82,012
+
+✓ GLNN MASS Ensemble training complete
+
+================================================================================
+
+ts2hybrid_jax_SHO_consensus0_01_sysidx0.ipynb
+Cell 1, output 1:
+✓ All required libraries imported and configured.
+
+Cell 2, output 1:
+Configured Damped Harmonic Motion Data (Paper Baseline) - JAX:
+  State: 1D [q, q_dot] | ω: 1.0 | a (damping): 0.02
+  Trajectories: 40 × 201 points = 8040 point pairs
+  Initial conditions: Uniform in [-1, 1]²
+
+Cell 3, output 1:
+Generating damped harmonic motion data (40 trajectories × 200 points)...
+✓ Data generated: 40 × 201 = 8000 pairs
+  Train/Test: 4000 / 4000
+  Reference trajectory (Trajectory 0): q₀=-0.0226, q̇₀=0.3596
+
+Cell 4, output 1:
+--- Damped Harmonic Motion Data Summary ---
+Physics Setup:
+  System: 1D Damped Harmonic Oscillator
+  EOM: q̈ + aq̇ + ω²q = 0  (where a=0.02, ω=1.0)
+  Initial conditions: Uniform in [-1, 1]²
+
+Dataset Configuration (matches GLNN paper Table 1):
+  Trajectories: 40
+  Points per trajectory: 201
+  Time step (dt): 0.05
+  Total point pairs: 8000
+  Train/Test split: 1:1 → Train=4000, Test=4000
+
+[Raw Statistics: Mean | Std | Min | Max]
+  Position q:  0.0648 | 0.2276 | -0.3433 | 0.3542
+  Velocity q̇: -0.0121 | 0.2478 | -0.3487 | 0.3599
+
+[Derivative (Target) Statistics]
+  Mean: [ 0.064122 -0.015306]
+  Std:  [0.228089 0.247096]
+
+[Physics Verification]
+  Position-Velocity correlation: 0.0336 (weak, expected for oscillatory motion)
+  Velocity magnitude (train): mean=0.2245, std=0.1056
+-------------------------------------------
+
+Cell 5, output 1:
+Total dataset size    : 4000 points
+Active points (>1e-4) : 4000 points
+Dead points (≤1e-4)   : 0 (0.00%)
+
+Cell 5, output 2:
+[text/plain]
+<Figure size 1200x800 with 2 Axes>
+[image/png] (87665 encoded characters)
+
+Cell 5, output 3:
+[text/plain]
+<Figure size 1000x500 with 1 Axes>
+[image/png] (29085 encoded characters)
+
+Cell 6, output 1:
+GLNN configured : DOF=1  dt=0.0333s  EPS=0.001
+L-net           : 3x Dense(200)-Softplus → scalar (Lagrangian)
+F-net           : 3x Dense(200)-Softplus → 1D (Non-conservative Forces)
+
+Cell 7, output 1:
+Using device: cuda:0
+
+================================================================================
+                        STARTING MASS ENSEMBLE TRAINING                         
+================================================================================
+Device: cuda:0
+Ensemble Size: 2 systems
+
+━━━ Training System ━━━
+Stage 1: Warmup (10000 iterations)
+[Iter   500] Comb_Loss: 7.60e-03 | Sys MSEs: [3.66e-07, 2.61e-07] | Total Time: 0.26 min
+[Iter  1000] Comb_Loss: 7.00e-03 | Sys MSEs: [2.63e-07, 1.37e-07] | Total Time: 0.38 min
+[Iter  1500] Comb_Loss: 6.21e-03 | Sys MSEs: [1.77e-07, 8.72e-08] | Total Time: 0.51 min
+[Iter  2000] Comb_Loss: 5.34e-03 | Sys MSEs: [1.89e-07, 8.46e-08] | Total Time: 0.63 min
+[Iter  2500] Comb_Loss: 4.51e-03 | Sys MSEs: [7.72e-08, 1.17e-06] | Total Time: 0.76 min
+[Iter  3000] Comb_Loss: 3.75e-03 | Sys MSEs: [9.82e-07, 1.22e-07] | Total Time: 0.89 min
+[Iter  3500] Comb_Loss: 3.08e-03 | Sys MSEs: [1.50e-08, 2.45e-08] | Total Time: 1.02 min
+[Iter  4000] Comb_Loss: 2.49e-03 | Sys MSEs: [1.48e-08, 7.68e-09] | Total Time: 1.15 min
+[Iter  4500] Comb_Loss: 1.99e-03 | Sys MSEs: [9.59e-09, 1.71e-09] | Total Time: 1.27 min
+[Iter  5000] Comb_Loss: 1.57e-03 | Sys MSEs: [8.75e-08, 2.46e-06] | Total Time: 1.40 min
+[Iter  5500] Comb_Loss: 1.22e-03 | Sys MSEs: [2.04e-06, 4.92e-09] | Total Time: 1.52 min
+[Iter  6000] Comb_Loss: 9.35e-04 | Sys MSEs: [1.55e-08, 6.83e-09] | Total Time: 1.65 min
+[Iter  6500] Comb_Loss: 7.01e-04 | Sys MSEs: [1.42e-08, 5.60e-09] | Total Time: 1.77 min
+[Iter  7000] Comb_Loss: 5.12e-04 | Sys MSEs: [1.41e-08, 5.60e-09] | Total Time: 1.90 min
+[Iter  7500] Comb_Loss: 3.62e-04 | Sys MSEs: [8.26e-09, 4.79e-09] | Total Time: 2.02 min
+[Iter  8000] Comb_Loss: 2.47e-04 | Sys MSEs: [1.46e-08, 5.90e-09] | Total Time: 2.15 min
+[Iter  8500] Comb_Loss: 1.64e-04 | Sys MSEs: [1.48e-08, 3.98e-07] | Total Time: 2.28 min
+[Iter  9000] Comb_Loss: 1.09e-04 | Sys MSEs: [1.42e-06, 3.10e-06] | Total Time: 2.40 min
+[Iter  9500] Comb_Loss: 6.69e-05 | Sys MSEs: [5.75e-09, 3.22e-07] | Total Time: 2.53 min
+[Iter 10000] Comb_Loss: 4.31e-05 | Sys MSEs: [6.66e-08, 1.78e-07] | Total Time: 2.65 min
+
+✅ Ensemble Training complete.
+================================================================================
+Training complete in 2.65 minutes.
+Model object is available as `dnn`.
+Model weights are available as `final_params`.
+Loss history available as `loss_arr` (10000 points).
+================================================================================
+
+Cell 8, output 1:
+✓ Evaluation utilities loaded (JAX simplified wrapper - Single System Evaluation).
+
+Cell 9, output 1:
+Automatically selected best_sys_idx: 0 (Train MSE: 3.1580e-09)
+
+One-Step MSE:
+  Train: 3.1580e-09
+  Test:  3.1580e-09
+  Gap:   0.0%
+
+✓ Integrating LNN dynamics using ODE solver:
+  Initial condition: q=-0.0226, q̇=0.3596
+  Integration time: t ∈ [0.000, 10.000] seconds
+  Number of evaluation points: 201
+
+Cell 10, output 1:
+[text/plain]
+<Figure size 1500x800 with 6 Axes>
+[image/png] (234085 encoded characters)
+
+Cell 10, output 2:
+
+======================================================================
+         DAMPED HARMONIC OSCILLATOR - RK4 ROLLOUT DIAGNOSTICS         
+======================================================================
+Model:                ts_2 wc=0.01
+Short Trajectory:     201 timesteps (10.050 s)
+Mean position error:  1.6124e-03
+Max position error:   2.9693e-03
+Mean velocity error:  8.4640e-04
+Max velocity error:   1.9476e-03
+----------------------------------------------------------------------
+Long Trajectory (E):  1001 timesteps (50.000 s)
+System: ω=1.00, damping=0.0200
+
+Ground Truth Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.023996
+  Energy loss:    0.040913 (63.03%)
+
+Model Predicted Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.023173
+  Energy drift:   -0.041736
+  Energy loss:    0.041736 (64.30%)
+
+Energy Prediction Error:
+  Mean error:     6.296521e-04
+  Max error:      1.259318e-03
+======================================================================
+
+Cell 11, output 1:
+
+Training Summary:
+  System: ω=1.0, a=0.02
+  Data: 40 × 201 points
+  Train/Test: 4000 / 4000
+  Ensemble Size: 2 systems
+
+Performance (Evaluated on System 0):
+  Train MSE: 3.1580e-09
+  Test MSE:  3.1580e-09
+  Gap:       0.0%
+
+Model Size:
+  Per-System Parameters: 41,006
+  Total Ensemble Parameters: 82,012
+
+✓ GLNN MASS Ensemble training complete
+
+================================================================================
+
+ts3hybrid_jax_SHO_consensus0_001_sysidx0(1).ipynb
+Cell 1, output 1:
+✓ All required libraries imported and configured.
+
+Cell 2, output 1:
+Configured Damped Harmonic Motion Data (Paper Baseline) - JAX:
+  State: 1D [q, q_dot] | ω: 1.0 | a (damping): 0.02
+  Trajectories: 40 × 201 points = 8040 point pairs
+  Initial conditions: Uniform in [-1, 1]²
+
+Cell 3, output 1:
+Generating damped harmonic motion data (40 trajectories × 200 points)...
+✓ Data generated: 40 × 201 = 8000 pairs
+  Train/Test: 4000 / 4000
+  Reference trajectory (Trajectory 0): q₀=-0.0226, q̇₀=0.3596
+
+Cell 4, output 1:
+--- Damped Harmonic Motion Data Summary ---
+Physics Setup:
+  System: 1D Damped Harmonic Oscillator
+  EOM: q̈ + aq̇ + ω²q = 0  (where a=0.02, ω=1.0)
+  Initial conditions: Uniform in [-1, 1]²
+
+Dataset Configuration (matches GLNN paper Table 1):
+  Trajectories: 40
+  Points per trajectory: 201
+  Time step (dt): 0.05
+  Total point pairs: 8000
+  Train/Test split: 1:1 → Train=4000, Test=4000
+
+[Raw Statistics: Mean | Std | Min | Max]
+  Position q:  0.0648 | 0.2276 | -0.3433 | 0.3542
+  Velocity q̇: -0.0121 | 0.2478 | -0.3487 | 0.3599
+
+[Derivative (Target) Statistics]
+  Mean: [ 0.064122 -0.015306]
+  Std:  [0.228089 0.247096]
+
+[Physics Verification]
+  Position-Velocity correlation: 0.0336 (weak, expected for oscillatory motion)
+  Velocity magnitude (train): mean=0.2245, std=0.1056
+-------------------------------------------
+
+Cell 5, output 1:
+Total dataset size    : 4000 points
+Active points (>1e-4) : 4000 points
+Dead points (≤1e-4)   : 0 (0.00%)
+
+Cell 5, output 2:
+[text/plain]
+<Figure size 1200x800 with 2 Axes>
+[image/png] (87665 encoded characters)
+
+Cell 5, output 3:
+[text/plain]
+<Figure size 1000x500 with 1 Axes>
+[image/png] (29085 encoded characters)
+
+Cell 6, output 1:
+GLNN configured : DOF=1  dt=0.0333s  EPS=0.001
+L-net           : 3x Dense(200)-Softplus → scalar (Lagrangian)
+F-net           : 3x Dense(200)-Softplus → 1D (Non-conservative Forces)
+
+Cell 7, output 1:
+Using device: cuda:0
+
+================================================================================
+                        STARTING MASS ENSEMBLE TRAINING                         
+================================================================================
+Device: cuda:0
+Ensemble Size: 3 systems
+
+━━━ Training System ━━━
+Stage 1: Warmup (10000 iterations)
+[Iter   500] Comb_Loss: 1.15e-02 | Sys MSEs: [3.62e-07, 2.02e-07, 3.23e-07] | Total Time: 0.34 min
+[Iter  1000] Comb_Loss: 1.05e-02 | Sys MSEs: [2.46e-07, 1.15e-07, 2.41e-07] | Total Time: 0.49 min
+[Iter  1500] Comb_Loss: 9.28e-03 | Sys MSEs: [4.44e-07, 4.27e-07, 1.56e-07] | Total Time: 0.65 min
+[Iter  2000] Comb_Loss: 8.02e-03 | Sys MSEs: [2.55e-07, 7.48e-08, 1.15e-07] | Total Time: 0.80 min
+[Iter  2500] Comb_Loss: 6.82e-03 | Sys MSEs: [1.86e-07, 2.62e-05, 8.65e-08] | Total Time: 0.95 min
+[Iter  3000] Comb_Loss: 5.66e-03 | Sys MSEs: [2.15e-08, 2.73e-09, 2.12e-07] | Total Time: 1.11 min
+[Iter  3500] Comb_Loss: 4.65e-03 | Sys MSEs: [1.60e-08, 1.29e-09, 3.61e-08] | Total Time: 1.26 min
+[Iter  4000] Comb_Loss: 3.78e-03 | Sys MSEs: [1.73e-08, 3.12e-08, 5.34e-08] | Total Time: 1.42 min
+[Iter  4500] Comb_Loss: 3.03e-03 | Sys MSEs: [1.69e-07, 1.83e-09, 1.59e-08] | Total Time: 1.57 min
+[Iter  5000] Comb_Loss: 2.40e-03 | Sys MSEs: [1.80e-08, 1.01e-06, 8.73e-07] | Total Time: 1.73 min
+[Iter  5500] Comb_Loss: 1.87e-03 | Sys MSEs: [1.57e-08, 8.19e-09, 1.28e-07] | Total Time: 1.89 min
+[Iter  6000] Comb_Loss: 1.43e-03 | Sys MSEs: [2.10e-08, 6.96e-09, 7.87e-09] | Total Time: 2.04 min
+[Iter  6500] Comb_Loss: 1.07e-03 | Sys MSEs: [1.23e-08, 8.88e-09, 3.69e-08] | Total Time: 2.20 min
+[Iter  7000] Comb_Loss: 7.82e-04 | Sys MSEs: [2.17e-08, 9.33e-09, 6.22e-09] | Total Time: 2.35 min
+[Iter  7500] Comb_Loss: 5.70e-04 | Sys MSEs: [8.63e-09, 1.20e-07, 7.71e-09] | Total Time: 2.51 min
+[Iter  8000] Comb_Loss: 4.00e-04 | Sys MSEs: [9.43e-09, 1.80e-08, 6.30e-09] | Total Time: 2.66 min
+[Iter  8500] Comb_Loss: 2.72e-04 | Sys MSEs: [1.16e-08, 1.82e-08, 7.19e-07] | Total Time: 2.82 min
+[Iter  9000] Comb_Loss: 1.80e-04 | Sys MSEs: [3.34e-08, 7.83e-09, 5.93e-09] | Total Time: 2.97 min
+[Iter  9500] Comb_Loss: 1.21e-04 | Sys MSEs: [1.15e-08, 1.52e-06, 2.40e-07] | Total Time: 3.13 min
+[Iter 10000] Comb_Loss: 8.11e-05 | Sys MSEs: [3.21e-08, 6.16e-09, 4.33e-07] | Total Time: 3.28 min
+
+✅ Ensemble Training complete.
+================================================================================
+Training complete in 3.35 minutes.
+Model object is available as `dnn`.
+Model weights are available as `final_params`.
+Loss history available as `loss_arr` (10000 points).
+================================================================================
+
+Cell 8, output 1:
+✓ Evaluation utilities loaded (JAX simplified wrapper - Single System Evaluation).
+
+Cell 9, output 1:
+Automatically selected best_sys_idx: 1 (Train MSE: 3.8399e-10)
+
+One-Step MSE:
+  Train: 2.0751e-09
+  Test:  2.0751e-09
+  Gap:   0.0%
+
+✓ Integrating LNN dynamics using ODE solver:
+  Initial condition: q=-0.0226, q̇=0.3596
+  Integration time: t ∈ [0.000, 10.000] seconds
+  Number of evaluation points: 201
+
+Cell 10, output 1:
+[text/plain]
+<Figure size 1500x800 with 6 Axes>
+[image/png] (245985 encoded characters)
+
+Cell 10, output 2:
+
+======================================================================
+         DAMPED HARMONIC OSCILLATOR - RK4 ROLLOUT DIAGNOSTICS         
+======================================================================
+Model:                ts_3 wc=0.001
+Short Trajectory:     201 timesteps (10.050 s)
+Mean position error:  2.2318e-03
+Max position error:   6.0482e-03
+Mean velocity error:  2.6161e-03
+Max velocity error:   6.5232e-03
+----------------------------------------------------------------------
+Long Trajectory (E):  1001 timesteps (50.000 s)
+System: ω=1.00, damping=0.0200
+
+Ground Truth Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.023996
+  Energy loss:    0.040913 (63.03%)
+
+Model Predicted Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.018500
+  Energy drift:   -0.046409
+  Energy loss:    0.046409 (71.50%)
+
+Energy Prediction Error:
+  Mean error:     3.834340e-03
+  Max error:      5.642379e-03
+======================================================================
+
+Cell 11, output 1:
+
+Training Summary:
+  System: ω=1.0, a=0.02
+  Data: 40 × 201 points
+  Train/Test: 4000 / 4000
+  Ensemble Size: 3 systems
+
+Performance (Evaluated on System 0):
+  Train MSE: 2.0751e-09
+  Test MSE:  2.0751e-09
+  Gap:       0.0%
+
+Model Size:
+  Per-System Parameters: 41,006
+  Total Ensemble Parameters: 123,018
+
+✓ GLNN MASS Ensemble training complete
+
+================================================================================
+
+ts3hybrid_jax_SHO_consensus0_01_sysidx0(1).ipynb
+Cell 1, output 1:
+✓ All required libraries imported and configured.
+
+Cell 2, output 1:
+Configured Damped Harmonic Motion Data (Paper Baseline) - JAX:
+  State: 1D [q, q_dot] | ω: 1.0 | a (damping): 0.02
+  Trajectories: 40 × 201 points = 8040 point pairs
+  Initial conditions: Uniform in [-1, 1]²
+
+Cell 3, output 1:
+Generating damped harmonic motion data (40 trajectories × 200 points)...
+✓ Data generated: 40 × 201 = 8000 pairs
+  Train/Test: 4000 / 4000
+  Reference trajectory (Trajectory 0): q₀=-0.0226, q̇₀=0.3596
+
+Cell 4, output 1:
+--- Damped Harmonic Motion Data Summary ---
+Physics Setup:
+  System: 1D Damped Harmonic Oscillator
+  EOM: q̈ + aq̇ + ω²q = 0  (where a=0.02, ω=1.0)
+  Initial conditions: Uniform in [-1, 1]²
+
+Dataset Configuration (matches GLNN paper Table 1):
+  Trajectories: 40
+  Points per trajectory: 201
+  Time step (dt): 0.05
+  Total point pairs: 8000
+  Train/Test split: 1:1 → Train=4000, Test=4000
+
+[Raw Statistics: Mean | Std | Min | Max]
+  Position q:  0.0648 | 0.2276 | -0.3433 | 0.3542
+  Velocity q̇: -0.0121 | 0.2478 | -0.3487 | 0.3599
+
+[Derivative (Target) Statistics]
+  Mean: [ 0.064122 -0.015306]
+  Std:  [0.228089 0.247096]
+
+[Physics Verification]
+  Position-Velocity correlation: 0.0336 (weak, expected for oscillatory motion)
+  Velocity magnitude (train): mean=0.2245, std=0.1056
+-------------------------------------------
+
+Cell 5, output 1:
+Total dataset size    : 4000 points
+Active points (>1e-4) : 4000 points
+Dead points (≤1e-4)   : 0 (0.00%)
+
+Cell 5, output 2:
+[text/plain]
+<Figure size 1200x800 with 2 Axes>
+[image/png] (87665 encoded characters)
+
+Cell 5, output 3:
+[text/plain]
+<Figure size 1000x500 with 1 Axes>
+[image/png] (29085 encoded characters)
+
+Cell 6, output 1:
+GLNN configured : DOF=1  dt=0.0333s  EPS=0.001
+L-net           : 3x Dense(200)-Softplus → scalar (Lagrangian)
+F-net           : 3x Dense(200)-Softplus → 1D (Non-conservative Forces)
+
+Cell 7, output 1:
+Using device: cuda:0
+
+================================================================================
+                        STARTING MASS ENSEMBLE TRAINING                         
+================================================================================
+Device: cuda:0
+Ensemble Size: 3 systems
+
+━━━ Training System ━━━
+Stage 1: Warmup (10000 iterations)
+[Iter   500] Comb_Loss: 1.15e-02 | Sys MSEs: [3.62e-07, 2.02e-07, 3.23e-07] | Total Time: 0.29 min
+[Iter  1000] Comb_Loss: 1.05e-02 | Sys MSEs: [2.46e-07, 1.15e-07, 2.41e-07] | Total Time: 0.45 min
+[Iter  1500] Comb_Loss: 9.28e-03 | Sys MSEs: [4.34e-07, 1.64e-07, 1.56e-07] | Total Time: 0.61 min
+[Iter  2000] Comb_Loss: 8.02e-03 | Sys MSEs: [1.38e-07, 3.60e-08, 1.15e-07] | Total Time: 0.78 min
+[Iter  2500] Comb_Loss: 6.80e-03 | Sys MSEs: [8.83e-08, 2.44e-08, 8.65e-08] | Total Time: 0.95 min
+[Iter  3000] Comb_Loss: 5.66e-03 | Sys MSEs: [5.19e-08, 2.86e-09, 2.02e-07] | Total Time: 1.11 min
+[Iter  3500] Comb_Loss: 4.65e-03 | Sys MSEs: [1.83e-07, 1.71e-07, 4.20e-07] | Total Time: 1.27 min
+[Iter  4000] Comb_Loss: 3.81e-03 | Sys MSEs: [2.02e-08, 2.69e-05, 2.43e-08] | Total Time: 1.43 min
+[Iter  4500] Comb_Loss: 3.05e-03 | Sys MSEs: [1.79e-08, 1.97e-05, 2.76e-07] | Total Time: 1.59 min
+[Iter  5000] Comb_Loss: 2.40e-03 | Sys MSEs: [5.85e-07, 1.81e-09, 7.52e-07] | Total Time: 1.75 min
+[Iter  5500] Comb_Loss: 1.87e-03 | Sys MSEs: [1.82e-08, 4.00e-09, 7.75e-09] | Total Time: 1.92 min
+[Iter  6000] Comb_Loss: 1.43e-03 | Sys MSEs: [2.86e-08, 3.79e-07, 1.15e-08] | Total Time: 2.08 min
+[Iter  6500] Comb_Loss: 1.07e-03 | Sys MSEs: [1.19e-08, 6.90e-09, 8.22e-09] | Total Time: 2.24 min
+[Iter  7000] Comb_Loss: 7.83e-04 | Sys MSEs: [1.53e-07, 2.00e-08, 1.26e-06] | Total Time: 2.40 min
+[Iter  7500] Comb_Loss: 5.78e-04 | Sys MSEs: [1.38e-08, 1.63e-06, 4.43e-08] | Total Time: 2.57 min
+[Iter  8000] Comb_Loss: 4.21e-04 | Sys MSEs: [1.58e-08, 1.09e-08, 2.16e-07] | Total Time: 2.73 min
+[Iter  8500] Comb_Loss: 3.05e-04 | Sys MSEs: [1.71e-08, 1.61e-06, 1.86e-07] | Total Time: 2.89 min
+[Iter  9000] Comb_Loss: 2.13e-04 | Sys MSEs: [1.97e-08, 1.74e-08, 5.11e-09] | Total Time: 3.05 min
+[Iter  9500] Comb_Loss: 1.49e-04 | Sys MSEs: [1.85e-08, 9.75e-09, 4.25e-07] | Total Time: 3.21 min
+[Iter 10000] Comb_Loss: 1.08e-04 | Sys MSEs: [6.38e-08, 2.28e-06, 8.87e-08] | Total Time: 3.37 min
+
+✅ Ensemble Training complete.
+================================================================================
+Training complete in 3.38 minutes.
+Model object is available as `dnn`.
+Model weights are available as `final_params`.
+Loss history available as `loss_arr` (10000 points).
+================================================================================
+
+Cell 8, output 1:
+✓ Evaluation utilities loaded (JAX simplified wrapper - Single System Evaluation).
+
+Cell 9, output 1:
+Automatically selected best_sys_idx: 0 (Train MSE: 2.9813e-09)
+
+One-Step MSE:
+  Train: 2.9813e-09
+  Test:  2.9813e-09
+  Gap:   0.0%
+
+✓ Integrating LNN dynamics using ODE solver:
+  Initial condition: q=-0.0226, q̇=0.3596
+  Integration time: t ∈ [0.000, 10.000] seconds
+  Number of evaluation points: 201
+
+Cell 10, output 1:
+[text/plain]
+<Figure size 1500x800 with 6 Axes>
+[image/png] (245469 encoded characters)
+
+Cell 10, output 2:
+
+======================================================================
+         DAMPED HARMONIC OSCILLATOR - RK4 ROLLOUT DIAGNOSTICS         
+======================================================================
+Model:                ts_3 wc=0.01
+Short Trajectory:     201 timesteps (10.050 s)
+Mean position error:  2.4320e-03
+Max position error:   6.2720e-03
+Mean velocity error:  2.8393e-03
+Max velocity error:   8.3508e-03
+----------------------------------------------------------------------
+Long Trajectory (E):  1001 timesteps (50.000 s)
+System: ω=1.00, damping=0.0200
+
+Ground Truth Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.023996
+  Energy loss:    0.040913 (63.03%)
+
+Model Predicted Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.031559
+  Energy drift:   -0.033350
+  Energy loss:    0.033350 (51.38%)
+
+Energy Prediction Error:
+  Mean error:     4.901806e-03
+  Max error:      7.563507e-03
+======================================================================
+
+Cell 11, output 1:
+
+Training Summary:
+  System: ω=1.0, a=0.02
+  Data: 40 × 201 points
+  Train/Test: 4000 / 4000
+  Ensemble Size: 3 systems
+
+Performance (Evaluated on System 0):
+  Train MSE: 2.9813e-09
+  Test MSE:  2.9813e-09
+  Gap:       0.0%
+
+Model Size:
+  Per-System Parameters: 41,006
+  Total Ensemble Parameters: 123,018
+
+✓ GLNN MASS Ensemble training complete
+
+================================================================================
+
+ts4hybrid_jax_SHO_consensus0_001_sysidx0.ipynb
+Cell 1, output 1:
+✓ All required libraries imported and configured.
+
+Cell 2, output 1:
+Configured Damped Harmonic Motion Data (Paper Baseline) - JAX:
+  State: 1D [q, q_dot] | ω: 1.0 | a (damping): 0.02
+  Trajectories: 40 × 201 points = 8040 point pairs
+  Initial conditions: Uniform in [-1, 1]²
+
+Cell 3, output 1:
+Generating damped harmonic motion data (40 trajectories × 200 points)...
+✓ Data generated: 40 × 201 = 8000 pairs
+  Train/Test: 4000 / 4000
+  Reference trajectory (Trajectory 0): q₀=-0.0226, q̇₀=0.3596
+
+Cell 4, output 1:
+--- Damped Harmonic Motion Data Summary ---
+Physics Setup:
+  System: 1D Damped Harmonic Oscillator
+  EOM: q̈ + aq̇ + ω²q = 0  (where a=0.02, ω=1.0)
+  Initial conditions: Uniform in [-1, 1]²
+
+Dataset Configuration (matches GLNN paper Table 1):
+  Trajectories: 40
+  Points per trajectory: 201
+  Time step (dt): 0.05
+  Total point pairs: 8000
+  Train/Test split: 1:1 → Train=4000, Test=4000
+
+[Raw Statistics: Mean | Std | Min | Max]
+  Position q:  0.0648 | 0.2276 | -0.3433 | 0.3542
+  Velocity q̇: -0.0121 | 0.2478 | -0.3487 | 0.3599
+
+[Derivative (Target) Statistics]
+  Mean: [ 0.064122 -0.015306]
+  Std:  [0.228089 0.247096]
+
+[Physics Verification]
+  Position-Velocity correlation: 0.0336 (weak, expected for oscillatory motion)
+  Velocity magnitude (train): mean=0.2245, std=0.1056
+-------------------------------------------
+
+Cell 5, output 1:
+Total dataset size    : 4000 points
+Active points (>1e-4) : 4000 points
+Dead points (≤1e-4)   : 0 (0.00%)
+
+Cell 5, output 2:
+[text/plain]
+<Figure size 1200x800 with 2 Axes>
+[image/png] (87665 encoded characters)
+
+Cell 5, output 3:
+[text/plain]
+<Figure size 1000x500 with 1 Axes>
+[image/png] (29085 encoded characters)
+
+Cell 6, output 1:
+GLNN configured : DOF=1  dt=0.0333s  EPS=0.001
+L-net           : 3x Dense(200)-Softplus → scalar (Lagrangian)
+F-net           : 3x Dense(200)-Softplus → 1D (Non-conservative Forces)
+
+Cell 7, output 1:
+Using device: cuda:0
+
+================================================================================
+                        STARTING MASS ENSEMBLE TRAINING                         
+================================================================================
+Device: cuda:0
+Ensemble Size: 4 systems
+
+━━━ Training System ━━━
+Stage 1: Warmup (10000 iterations)
+[Iter   500] Comb_Loss: 1.53e-02 | Sys MSEs: [3.62e-07, 2.02e-07, 3.22e-07, 3.02e-07] | Total Time: 0.34 min
+[Iter  1000] Comb_Loss: 1.40e-02 | Sys MSEs: [2.46e-07, 1.12e-07, 2.41e-07, 2.35e-07] | Total Time: 0.52 min
+[Iter  1500] Comb_Loss: 1.23e-02 | Sys MSEs: [3.85e-07, 1.71e-07, 1.56e-07, 1.44e-07] | Total Time: 0.70 min
+[Iter  2000] Comb_Loss: 1.06e-02 | Sys MSEs: [5.63e-07, 1.08e-07, 1.14e-07, 2.98e-07] | Total Time: 0.89 min
+[Iter  2500] Comb_Loss: 8.95e-03 | Sys MSEs: [2.79e-07, 6.49e-08, 8.64e-08, 6.33e-08] | Total Time: 1.07 min
+[Iter  3000] Comb_Loss: 7.42e-03 | Sys MSEs: [1.77e-08, 6.60e-08, 1.97e-07, 6.56e-09] | Total Time: 1.25 min
+[Iter  3500] Comb_Loss: 6.09e-03 | Sys MSEs: [8.19e-06, 6.31e-07, 1.61e-07, 1.11e-07] | Total Time: 1.44 min
+[Iter  4000] Comb_Loss: 4.93e-03 | Sys MSEs: [2.81e-08, 2.48e-09, 2.33e-06, 3.54e-08] | Total Time: 1.62 min
+[Iter  4500] Comb_Loss: 3.96e-03 | Sys MSEs: [1.35e-06, 1.21e-08, 1.21e-08, 8.56e-08] | Total Time: 1.81 min
+[Iter  5000] Comb_Loss: 3.14e-03 | Sys MSEs: [1.70e-08, 1.54e-09, 8.47e-09, 4.85e-06] | Total Time: 2.00 min
+[Iter  5500] Comb_Loss: 2.44e-03 | Sys MSEs: [1.56e-08, 3.74e-08, 1.54e-08, 7.00e-08] | Total Time: 2.18 min
+[Iter  6000] Comb_Loss: 1.87e-03 | Sys MSEs: [3.10e-07, 5.85e-09, 1.02e-08, 1.00e-08] | Total Time: 2.37 min
+[Iter  6500] Comb_Loss: 1.41e-03 | Sys MSEs: [4.49e-08, 3.85e-06, 6.93e-09, 4.53e-08] | Total Time: 2.56 min
+[Iter  7000] Comb_Loss: 1.02e-03 | Sys MSEs: [1.59e-07, 1.17e-08, 6.22e-09, 9.48e-09] | Total Time: 2.74 min
+[Iter  7500] Comb_Loss: 7.20e-04 | Sys MSEs: [2.75e-08, 9.10e-09, 5.41e-09, 7.57e-09] | Total Time: 2.93 min
+[Iter  8000] Comb_Loss: 4.90e-04 | Sys MSEs: [1.36e-06, 1.04e-08, 4.90e-09, 3.31e-08] | Total Time: 3.11 min
+[Iter  8500] Comb_Loss: 3.19e-04 | Sys MSEs: [7.88e-09, 3.14e-07, 6.96e-09, 7.56e-09] | Total Time: 3.30 min
+[Iter  9000] Comb_Loss: 2.21e-04 | Sys MSEs: [5.39e-09, 2.14e-08, 3.14e-08, 1.97e-05] | Total Time: 3.48 min
+[Iter  9500] Comb_Loss: 1.27e-04 | Sys MSEs: [5.23e-09, 9.68e-09, 9.71e-09, 4.08e-08] | Total Time: 3.67 min
+[Iter 10000] Comb_Loss: 8.39e-05 | Sys MSEs: [1.70e-08, 5.78e-07, 4.39e-09, 6.09e-08] | Total Time: 3.86 min
+
+✅ Ensemble Training complete.
+================================================================================
+Training complete in 3.93 minutes.
+Model object is available as `dnn`.
+Model weights are available as `final_params`.
+Loss history available as `loss_arr` (10000 points).
+================================================================================
+
+Cell 8, output 1:
+✓ Evaluation utilities loaded (JAX simplified wrapper - Single System Evaluation).
+
+Cell 9, output 1:
+Automatically selected best_sys_idx: 2 (Train MSE: 2.6177e-10)
+
+One-Step MSE:
+  Train: 2.1641e-09
+  Test:  2.1641e-09
+  Gap:   0.0%
+
+✓ Integrating LNN dynamics using ODE solver:
+  Initial condition: q=-0.0226, q̇=0.3596
+  Integration time: t ∈ [0.000, 10.000] seconds
+  Number of evaluation points: 201
+
+Cell 10, output 1:
+[text/plain]
+<Figure size 1500x800 with 6 Axes>
+[image/png] (247457 encoded characters)
+
+Cell 10, output 2:
+
+======================================================================
+         DAMPED HARMONIC OSCILLATOR - RK4 ROLLOUT DIAGNOSTICS         
+======================================================================
+Model:                ts_4 wc=0.001
+Short Trajectory:     201 timesteps (10.050 s)
+Mean position error:  2.4229e-03
+Max position error:   6.4608e-03
+Mean velocity error:  2.8713e-03
+Max velocity error:   7.4162e-03
+----------------------------------------------------------------------
+Long Trajectory (E):  1001 timesteps (50.000 s)
+System: ω=1.00, damping=0.0200
+
+Ground Truth Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.023996
+  Energy loss:    0.040913 (63.03%)
+
+Model Predicted Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.017652
+  Energy drift:   -0.047257
+  Energy loss:    0.047257 (72.80%)
+
+Energy Prediction Error:
+  Mean error:     4.394427e-03
+  Max error:      6.343694e-03
+======================================================================
+
+Cell 11, output 1:
+
+Training Summary:
+  System: ω=1.0, a=0.02
+  Data: 40 × 201 points
+  Train/Test: 4000 / 4000
+  Ensemble Size: 4 systems
+
+Performance (Evaluated on System 0):
+  Train MSE: 2.1641e-09
+  Test MSE:  2.1641e-09
+  Gap:       0.0%
+
+Model Size:
+  Per-System Parameters: 41,006
+  Total Ensemble Parameters: 164,024
+
+✓ GLNN MASS Ensemble training complete
+
+================================================================================
+
+ts4hybrid_jax_SHO_consensus0_01_sysidx0.ipynb
+Cell 1, output 1:
+✓ All required libraries imported and configured.
+
+Cell 2, output 1:
+Configured Damped Harmonic Motion Data (Paper Baseline) - JAX:
+  State: 1D [q, q_dot] | ω: 1.0 | a (damping): 0.02
+  Trajectories: 40 × 201 points = 8040 point pairs
+  Initial conditions: Uniform in [-1, 1]²
+
+Cell 3, output 1:
+Generating damped harmonic motion data (40 trajectories × 200 points)...
+✓ Data generated: 40 × 201 = 8000 pairs
+  Train/Test: 4000 / 4000
+  Reference trajectory (Trajectory 0): q₀=-0.0226, q̇₀=0.3596
+
+Cell 4, output 1:
+--- Damped Harmonic Motion Data Summary ---
+Physics Setup:
+  System: 1D Damped Harmonic Oscillator
+  EOM: q̈ + aq̇ + ω²q = 0  (where a=0.02, ω=1.0)
+  Initial conditions: Uniform in [-1, 1]²
+
+Dataset Configuration (matches GLNN paper Table 1):
+  Trajectories: 40
+  Points per trajectory: 201
+  Time step (dt): 0.05
+  Total point pairs: 8000
+  Train/Test split: 1:1 → Train=4000, Test=4000
+
+[Raw Statistics: Mean | Std | Min | Max]
+  Position q:  0.0648 | 0.2276 | -0.3433 | 0.3542
+  Velocity q̇: -0.0121 | 0.2478 | -0.3487 | 0.3599
+
+[Derivative (Target) Statistics]
+  Mean: [ 0.064122 -0.015306]
+  Std:  [0.228089 0.247096]
+
+[Physics Verification]
+  Position-Velocity correlation: 0.0336 (weak, expected for oscillatory motion)
+  Velocity magnitude (train): mean=0.2245, std=0.1056
+-------------------------------------------
+
+Cell 5, output 1:
+Total dataset size    : 4000 points
+Active points (>1e-4) : 4000 points
+Dead points (≤1e-4)   : 0 (0.00%)
+
+Cell 5, output 2:
+[text/plain]
+<Figure size 1200x800 with 2 Axes>
+[image/png] (87665 encoded characters)
+
+Cell 5, output 3:
+[text/plain]
+<Figure size 1000x500 with 1 Axes>
+[image/png] (29085 encoded characters)
+
+Cell 6, output 1:
+GLNN configured : DOF=1  dt=0.0333s  EPS=0.001
+L-net           : 3x Dense(200)-Softplus → scalar (Lagrangian)
+F-net           : 3x Dense(200)-Softplus → 1D (Non-conservative Forces)
+
+Cell 7, output 1:
+Using device: cuda:0
+
+================================================================================
+                        STARTING MASS ENSEMBLE TRAINING                         
+================================================================================
+Device: cuda:0
+Ensemble Size: 4 systems
+
+━━━ Training System ━━━
+Stage 1: Warmup (10000 iterations)
+[Iter   500] Comb_Loss: 1.53e-02 | Sys MSEs: [3.62e-07, 2.02e-07, 3.22e-07, 3.02e-07] | Total Time: 0.37 min
+[Iter  1000] Comb_Loss: 1.40e-02 | Sys MSEs: [2.46e-07, 1.12e-07, 2.41e-07, 2.35e-07] | Total Time: 0.54 min
+[Iter  1500] Comb_Loss: 1.23e-02 | Sys MSEs: [3.75e-07, 3.13e-07, 1.56e-07, 1.43e-07] | Total Time: 0.71 min
+[Iter  2000] Comb_Loss: 1.06e-02 | Sys MSEs: [1.42e-07, 4.08e-08, 1.14e-07, 2.03e-07] | Total Time: 0.89 min
+[Iter  2500] Comb_Loss: 8.95e-03 | Sys MSEs: [1.75e-07, 2.44e-08, 8.64e-08, 7.60e-07] | Total Time: 1.06 min
+[Iter  3000] Comb_Loss: 7.43e-03 | Sys MSEs: [1.38e-08, 2.65e-09, 2.80e-07, 2.80e-08] | Total Time: 1.24 min
+[Iter  3500] Comb_Loss: 6.09e-03 | Sys MSEs: [1.07e-08, 3.97e-08, 4.04e-08, 1.00e-07] | Total Time: 1.42 min
+[Iter  4000] Comb_Loss: 4.94e-03 | Sys MSEs: [1.01e-07, 7.61e-09, 2.51e-07, 6.11e-09] | Total Time: 1.60 min
+[Iter  4500] Comb_Loss: 3.96e-03 | Sys MSEs: [2.10e-08, 1.39e-09, 3.56e-06, 1.45e-08] | Total Time: 1.79 min
+[Iter  5000] Comb_Loss: 3.15e-03 | Sys MSEs: [2.37e-08, 5.10e-07, 1.98e-05, 1.21e-07] | Total Time: 1.97 min
+[Iter  5500] Comb_Loss: 2.45e-03 | Sys MSEs: [1.27e-07, 3.41e-09, 1.94e-08, 1.02e-08] | Total Time: 2.16 min
+[Iter  6000] Comb_Loss: 1.87e-03 | Sys MSEs: [2.47e-08, 5.61e-09, 7.17e-09, 2.01e-08] | Total Time: 2.35 min
+[Iter  6500] Comb_Loss: 1.40e-03 | Sys MSEs: [1.21e-08, 9.88e-09, 6.53e-09, 2.47e-08] | Total Time: 2.54 min
+[Iter  7000] Comb_Loss: 1.03e-03 | Sys MSEs: [1.53e-07, 2.66e-07, 6.29e-09, 2.75e-08] | Total Time: 2.73 min
+[Iter  7500] Comb_Loss: 7.28e-04 | Sys MSEs: [2.31e-08, 2.44e-06, 7.25e-09, 7.26e-08] | Total Time: 2.92 min
+[Iter  8000] Comb_Loss: 4.94e-04 | Sys MSEs: [2.60e-07, 2.42e-08, 6.79e-09, 1.83e-08] | Total Time: 3.11 min
+[Iter  8500] Comb_Loss: 3.29e-04 | Sys MSEs: [4.77e-08, 1.33e-08, 1.78e-06, 4.02e-06] | Total Time: 3.30 min
+[Iter  9000] Comb_Loss: 2.05e-04 | Sys MSEs: [5.66e-09, 1.21e-08, 4.56e-07, 5.22e-09] | Total Time: 3.49 min
+[Iter  9500] Comb_Loss: 1.31e-04 | Sys MSEs: [7.87e-09, 1.34e-08, 4.37e-08, 5.74e-07] | Total Time: 3.67 min
+[Iter 10000] Comb_Loss: 8.95e-05 | Sys MSEs: [2.13e-06, 1.60e-08, 4.45e-09, 9.76e-07] | Total Time: 3.86 min
+
+✅ Ensemble Training complete.
+================================================================================
+Training complete in 3.93 minutes.
+Model object is available as `dnn`.
+Model weights are available as `final_params`.
+Loss history available as `loss_arr` (10000 points).
+================================================================================
+
+Cell 8, output 1:
+✓ Evaluation utilities loaded (JAX simplified wrapper - Single System Evaluation).
+
+Cell 9, output 1:
+Automatically selected best_sys_idx: 2 (Train MSE: 2.3081e-10)
+
+One-Step MSE:
+  Train: 8.0933e-08
+  Test:  8.0933e-08
+  Gap:   0.0%
+
+✓ Integrating LNN dynamics using ODE solver:
+  Initial condition: q=-0.0226, q̇=0.3596
+  Integration time: t ∈ [0.000, 10.000] seconds
+  Number of evaluation points: 201
+
+Cell 10, output 1:
+[text/plain]
+<Figure size 1500x800 with 6 Axes>
+[image/png] (248569 encoded characters)
+
+Cell 10, output 2:
+
+======================================================================
+         DAMPED HARMONIC OSCILLATOR - RK4 ROLLOUT DIAGNOSTICS         
+======================================================================
+Model:                ts_4 wc=0.01
+Short Trajectory:     201 timesteps (10.050 s)
+Mean position error:  1.1785e-02
+Max position error:   2.5964e-02
+Mean velocity error:  1.3068e-02
+Max velocity error:   3.6176e-02
+----------------------------------------------------------------------
+Long Trajectory (E):  1001 timesteps (50.000 s)
+System: ω=1.00, damping=0.0200
+
+Ground Truth Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.023996
+  Energy loss:    0.040913 (63.03%)
+
+Model Predicted Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.004114
+  Energy drift:   -0.060795
+  Energy loss:    0.060795 (93.66%)
+
+Energy Prediction Error:
+  Mean error:     1.658267e-02
+  Max error:      2.197244e-02
+======================================================================
+
+Cell 11, output 1:
+
+Training Summary:
+  System: ω=1.0, a=0.02
+  Data: 40 × 201 points
+  Train/Test: 4000 / 4000
+  Ensemble Size: 4 systems
+
+Performance (Evaluated on System 0):
+  Train MSE: 8.0933e-08
+  Test MSE:  8.0933e-08
+  Gap:       0.0%
+
+Model Size:
+  Per-System Parameters: 41,006
+  Total Ensemble Parameters: 164,024
+
+✓ GLNN MASS Ensemble training complete
+
+================================================================================
+
+ts5hybrid_jax_SHO_consensus0_001_sysidx0(1).ipynb
+Cell 3, output 1:
+Generating damped harmonic motion data (40 trajectories × 200 points)...
+✓ Data generated: 40 × 201 = 8000 pairs
+  Train/Test: 4000 / 4000
+  Reference trajectory (Trajectory 0): q₀=-0.0226, q̇₀=0.3596
+
+Cell 7, output 1:
+Using device: cuda:0
+
+================================================================================
+                        STARTING MASS ENSEMBLE TRAINING                         
+================================================================================
+Device: cuda:0
+Ensemble Size: 5 systems
+
+━━━ Training System ━━━
+Stage 1: Warmup (10000 iterations)
+[Iter   500] Comb_Loss: 1.91e-02 | Sys MSEs: [3.44e-07, 2.03e-07, 3.05e-07, 2.94e-07, 4.58e-07] | Total Time: 0.36 min
+[Iter  1000] Comb_Loss: 1.74e-02 | Sys MSEs: [2.26e-07, 1.07e-07, 2.21e-07, 1.95e-07, 1.66e-07] | Total Time: 0.57 min
+[Iter  1500] Comb_Loss: 1.53e-02 | Sys MSEs: [1.94e-07, 1.14e-07, 1.45e-07, 1.60e-07, 8.50e-08] | Total Time: 0.78 min
+[Iter  2000] Comb_Loss: 1.31e-02 | Sys MSEs: [1.82e-07, 2.86e-06, 1.07e-07, 1.51e-06, 6.13e-08] | Total Time: 0.99 min
+[Iter  2500] Comb_Loss: 1.10e-02 | Sys MSEs: [1.23e-07, 5.15e-07, 1.30e-07, 2.33e-08, 3.84e-06] | Total Time: 1.19 min
+[Iter  3000] Comb_Loss: 9.11e-03 | Sys MSEs: [8.19e-08, 3.59e-09, 7.97e-08, 6.41e-09, 6.19e-08] | Total Time: 1.40 min
+[Iter  3500] Comb_Loss: 7.45e-03 | Sys MSEs: [4.70e-08, 1.42e-09, 5.06e-07, 6.80e-09, 9.57e-09] | Total Time: 1.60 min
+[Iter  4000] Comb_Loss: 6.04e-03 | Sys MSEs: [3.32e-07, 6.09e-09, 3.21e-07, 3.08e-08, 8.90e-07] | Total Time: 1.81 min
+[Iter  4500] Comb_Loss: 4.84e-03 | Sys MSEs: [1.82e-08, 2.06e-06, 2.65e-08, 5.00e-08, 5.90e-06] | Total Time: 2.02 min
+[Iter  5000] Comb_Loss: 3.83e-03 | Sys MSEs: [2.32e-08, 6.48e-06, 6.56e-09, 1.24e-07, 3.43e-09] | Total Time: 2.23 min
+[Iter  5500] Comb_Loss: 2.98e-03 | Sys MSEs: [2.76e-08, 3.51e-09, 7.47e-09, 3.13e-08, 1.52e-09] | Total Time: 2.43 min
+[Iter  6000] Comb_Loss: 2.30e-03 | Sys MSEs: [4.68e-08, 3.83e-06, 9.63e-09, 6.83e-08, 9.95e-06] | Total Time: 2.64 min
+[Iter  6500] Comb_Loss: 1.71e-03 | Sys MSEs: [1.77e-08, 8.38e-09, 1.00e-07, 6.04e-07, 1.17e-08] | Total Time: 2.85 min
+[Iter  7000] Comb_Loss: 1.25e-03 | Sys MSEs: [1.65e-08, 1.37e-08, 7.05e-09, 3.44e-06, 7.98e-06] | Total Time: 3.05 min
+[Iter  7500] Comb_Loss: 8.70e-04 | Sys MSEs: [2.17e-08, 1.18e-08, 7.17e-09, 6.87e-09, 1.66e-08] | Total Time: 3.26 min
+[Iter  8000] Comb_Loss: 5.92e-04 | Sys MSEs: [1.26e-06, 3.06e-08, 2.09e-08, 3.13e-06, 6.01e-07] | Total Time: 3.47 min
+[Iter  8500] Comb_Loss: 3.82e-04 | Sys MSEs: [6.24e-09, 1.23e-08, 6.18e-09, 1.79e-07, 2.92e-08] | Total Time: 3.67 min
+[Iter  9000] Comb_Loss: 2.46e-04 | Sys MSEs: [1.95e-08, 1.45e-08, 5.72e-09, 5.60e-09, 1.66e-06] | Total Time: 3.88 min
+[Iter  9500] Comb_Loss: 1.57e-04 | Sys MSEs: [9.65e-09, 9.03e-09, 2.37e-08, 1.47e-06, 4.50e-08] | Total Time: 4.09 min
+[Iter 10000] Comb_Loss: 1.19e-04 | Sys MSEs: [1.65e-05, 9.55e-07, 5.03e-09, 3.40e-09, 1.96e-08] | Total Time: 4.29 min
+
+✅ Ensemble Training complete.
+================================================================================
+Training complete in 4.29 minutes.
+Model object is available as `dnn`.
+Model weights are available as `final_params`.
+Loss history available as `loss_arr` (10000 points).
+================================================================================
+
+Cell 8, output 1:
+✓ Evaluation utilities loaded (JAX simplified wrapper - Single System Evaluation).
+
+Cell 11, output 1:
+
+Training Summary:
+  System: ω=1.0, a=0.02
+  Data: 40 × 201 points
+  Train/Test: 4000 / 4000
+  Ensemble Size: 5 systems
+
+Performance (Evaluated on System 0):
+  Train MSE: 4.2619e-07
+  Test MSE:  4.2619e-07
+  Gap:       0.0%
+
+Model Size:
+  Per-System Parameters: 41,006
+  Total Ensemble Parameters: 205,030
+
+✓ GLNN MASS Ensemble training complete
+
+================================================================================
+
+ts5hybrid_jax_SHO_consensus0_01_sysidx0(1).ipynb
+Cell 1, output 1:
+✓ All required libraries imported and configured.
+
+Cell 2, output 1:
+Configured Damped Harmonic Motion Data (Paper Baseline) - JAX:
+  State: 1D [q, q_dot] | ω: 1.0 | a (damping): 0.02
+  Trajectories: 40 × 201 points = 8040 point pairs
+  Initial conditions: Uniform in [-1, 1]²
+
+Cell 3, output 1:
+Generating damped harmonic motion data (40 trajectories × 200 points)...
+✓ Data generated: 40 × 201 = 8000 pairs
+  Train/Test: 4000 / 4000
+  Reference trajectory (Trajectory 0): q₀=-0.0226, q̇₀=0.3596
+
+Cell 4, output 1:
+--- Damped Harmonic Motion Data Summary ---
+Physics Setup:
+  System: 1D Damped Harmonic Oscillator
+  EOM: q̈ + aq̇ + ω²q = 0  (where a=0.02, ω=1.0)
+  Initial conditions: Uniform in [-1, 1]²
+
+Dataset Configuration (matches GLNN paper Table 1):
+  Trajectories: 40
+  Points per trajectory: 201
+  Time step (dt): 0.05
+  Total point pairs: 8000
+  Train/Test split: 1:1 → Train=4000, Test=4000
+
+[Raw Statistics: Mean | Std | Min | Max]
+  Position q:  0.0648 | 0.2276 | -0.3433 | 0.3542
+  Velocity q̇: -0.0121 | 0.2478 | -0.3487 | 0.3599
+
+[Derivative (Target) Statistics]
+  Mean: [ 0.064122 -0.015306]
+  Std:  [0.228089 0.247096]
+
+[Physics Verification]
+  Position-Velocity correlation: 0.0336 (weak, expected for oscillatory motion)
+  Velocity magnitude (train): mean=0.2245, std=0.1056
+-------------------------------------------
+
+Cell 5, output 1:
+Total dataset size    : 4000 points
+Active points (>1e-4) : 4000 points
+Dead points (≤1e-4)   : 0 (0.00%)
+
+Cell 5, output 2:
+[text/plain]
+<Figure size 1200x800 with 2 Axes>
+[image/png] (87665 encoded characters)
+
+Cell 5, output 3:
+[text/plain]
+<Figure size 1000x500 with 1 Axes>
+[image/png] (29085 encoded characters)
+
+Cell 6, output 1:
+GLNN configured : DOF=1  dt=0.0333s  EPS=0.001
+L-net           : 3x Dense(200)-Softplus → scalar (Lagrangian)
+F-net           : 3x Dense(200)-Softplus → 1D (Non-conservative Forces)
+
+Cell 7, output 1:
+Using device: cuda:0
+
+================================================================================
+                        STARTING MASS ENSEMBLE TRAINING                         
+================================================================================
+Device: cuda:0
+Ensemble Size: 5 systems
+
+━━━ Training System ━━━
+Stage 1: Warmup (10000 iterations)
+[Iter   500] Comb_Loss: 1.91e-02 | Sys MSEs: [3.44e-07, 2.03e-07, 3.05e-07, 2.94e-07, 4.58e-07] | Total Time: 0.38 min
+[Iter  1000] Comb_Loss: 1.74e-02 | Sys MSEs: [2.26e-07, 1.07e-07, 2.21e-07, 1.95e-07, 1.66e-07] | Total Time: 0.59 min
+[Iter  1500] Comb_Loss: 1.53e-02 | Sys MSEs: [1.92e-07, 2.42e-07, 1.45e-07, 1.48e-07, 8.50e-08] | Total Time: 0.80 min
+[Iter  2000] Comb_Loss: 1.31e-02 | Sys MSEs: [4.31e-07, 4.17e-07, 1.07e-07, 7.09e-09, 6.13e-08] | Total Time: 1.01 min
+[Iter  2500] Comb_Loss: 1.10e-02 | Sys MSEs: [1.36e-06, 2.30e-07, 1.29e-07, 2.49e-08, 3.39e-06] | Total Time: 1.23 min
+[Iter  3000] Comb_Loss: 9.11e-03 | Sys MSEs: [4.49e-07, 3.10e-09, 7.84e-08, 1.33e-08, 1.28e-08] | Total Time: 1.44 min
+[Iter  3500] Comb_Loss: 7.46e-03 | Sys MSEs: [1.50e-08, 3.43e-09, 8.49e-08, 6.91e-08, 2.51e-08] | Total Time: 1.66 min
+[Iter  4000] Comb_Loss: 6.04e-03 | Sys MSEs: [2.56e-08, 1.67e-09, 5.35e-07, 4.53e-09, 4.88e-09] | Total Time: 1.89 min
+[Iter  4500] Comb_Loss: 4.85e-03 | Sys MSEs: [5.09e-06, 2.07e-09, 7.33e-06, 6.80e-09, 3.68e-08] | Total Time: 2.11 min
+[Iter  5000] Comb_Loss: 3.83e-03 | Sys MSEs: [2.39e-07, 3.14e-09, 2.02e-07, 9.23e-07, 1.17e-08] | Total Time: 2.32 min
+[Iter  5500] Comb_Loss: 2.98e-03 | Sys MSEs: [3.15e-07, 2.81e-08, 8.05e-09, 1.16e-08, 1.63e-09] | Total Time: 2.54 min
+[Iter  6000] Comb_Loss: 2.28e-03 | Sys MSEs: [1.95e-08, 1.33e-08, 1.28e-06, 2.11e-08, 5.12e-09] | Total Time: 2.76 min
+[Iter  6500] Comb_Loss: 1.71e-03 | Sys MSEs: [1.29e-07, 1.63e-08, 6.88e-09, 2.77e-08, 3.26e-07] | Total Time: 2.97 min
+[Iter  7000] Comb_Loss: 1.25e-03 | Sys MSEs: [7.90e-08, 1.07e-08, 1.34e-08, 5.13e-07, 1.71e-08] | Total Time: 3.19 min
+[Iter  7500] Comb_Loss: 8.97e-04 | Sys MSEs: [6.69e-08, 1.10e-05, 9.44e-09, 1.26e-07, 3.57e-08] | Total Time: 3.41 min
+[Iter  8000] Comb_Loss: 6.03e-04 | Sys MSEs: [3.49e-08, 1.44e-08, 6.87e-09, 5.53e-09, 7.53e-08] | Total Time: 3.63 min
+[Iter  8500] Comb_Loss: 3.98e-04 | Sys MSEs: [3.81e-08, 1.78e-08, 8.38e-07, 6.09e-09, 2.31e-08] | Total Time: 3.84 min
+[Iter  9000] Comb_Loss: 3.08e-04 | Sys MSEs: [4.79e-05, 1.64e-08, 5.95e-07, 2.15e-08, 8.51e-07] | Total Time: 4.06 min
+[Iter  9500] Comb_Loss: 1.71e-04 | Sys MSEs: [6.02e-06, 1.54e-08, 3.68e-09, 9.31e-09, 1.79e-08] | Total Time: 4.28 min
+[Iter 10000] Comb_Loss: 1.08e-04 | Sys MSEs: [1.11e-08, 5.59e-07, 4.19e-09, 7.71e-09, 5.58e-08] | Total Time: 4.50 min
+
+✅ Ensemble Training complete.
+================================================================================
+Training complete in 4.57 minutes.
+Model object is available as `dnn`.
+Model weights are available as `final_params`.
+Loss history available as `loss_arr` (10000 points).
+================================================================================
+
+Cell 8, output 1:
+✓ Evaluation utilities loaded (JAX simplified wrapper - Single System Evaluation).
+
+Cell 9, output 1:
+Automatically selected best_sys_idx: 2 (Train MSE: 2.1656e-10)
+
+One-Step MSE:
+  Train: 7.9544e-10
+  Test:  7.9544e-10
+  Gap:   0.0%
+
+✓ Integrating LNN dynamics using ODE solver:
+  Initial condition: q=-0.0226, q̇=0.3596
+  Integration time: t ∈ [0.000, 10.000] seconds
+  Number of evaluation points: 201
+
+Cell 10, output 1:
+[text/plain]
+<Figure size 1500x800 with 6 Axes>
+[image/png] (242017 encoded characters)
+
+Cell 10, output 2:
+
+======================================================================
+         DAMPED HARMONIC OSCILLATOR - RK4 ROLLOUT DIAGNOSTICS         
+======================================================================
+Model:                ts_5 wc=0.01
+Short Trajectory:     201 timesteps (10.050 s)
+Mean position error:  1.3793e-03
+Max position error:   3.5949e-03
+Mean velocity error:  1.5273e-03
+Max velocity error:   3.7237e-03
+----------------------------------------------------------------------
+Long Trajectory (E):  1001 timesteps (50.000 s)
+System: ω=1.00, damping=0.0200
+
+Ground Truth Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.023996
+  Energy loss:    0.040913 (63.03%)
+
+Model Predicted Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.021223
+  Energy drift:   -0.043686
+  Energy loss:    0.043686 (67.30%)
+
+Energy Prediction Error:
+  Mean error:     1.987898e-03
+  Max error:      2.869075e-03
+======================================================================
+
+Cell 11, output 1:
+
+Training Summary:
+  System: ω=1.0, a=0.02
+  Data: 40 × 201 points
+  Train/Test: 4000 / 4000
+  Ensemble Size: 5 systems
+
+Performance (Evaluated on System 0):
+  Train MSE: 7.9544e-10
+  Test MSE:  7.9544e-10
+  Gap:       0.0%
+
+Model Size:
+  Per-System Parameters: 41,006
+  Total Ensemble Parameters: 205,030
+
+✓ GLNN MASS Ensemble training complete
+
+================================================================================
+
+ts6hybrid_jax_SHO_consensus0_001_sysidx0(1).ipynb
+Cell 1, output 1:
+✓ All required libraries imported and configured.
+
+Cell 2, output 1:
+Configured Damped Harmonic Motion Data (Paper Baseline) - JAX:
+  State: 1D [q, q_dot] | ω: 1.0 | a (damping): 0.02
+  Trajectories: 40 × 201 points = 8040 point pairs
+  Initial conditions: Uniform in [-1, 1]²
+
+Cell 3, output 1:
+Generating damped harmonic motion data (40 trajectories × 200 points)...
+✓ Data generated: 40 × 201 = 8000 pairs
+  Train/Test: 4000 / 4000
+  Reference trajectory (Trajectory 0): q₀=-0.0226, q̇₀=0.3596
+
+Cell 4, output 1:
+--- Damped Harmonic Motion Data Summary ---
+Physics Setup:
+  System: 1D Damped Harmonic Oscillator
+  EOM: q̈ + aq̇ + ω²q = 0  (where a=0.02, ω=1.0)
+  Initial conditions: Uniform in [-1, 1]²
+
+Dataset Configuration (matches GLNN paper Table 1):
+  Trajectories: 40
+  Points per trajectory: 201
+  Time step (dt): 0.05
+  Total point pairs: 8000
+  Train/Test split: 1:1 → Train=4000, Test=4000
+
+[Raw Statistics: Mean | Std | Min | Max]
+  Position q:  0.0648 | 0.2276 | -0.3433 | 0.3542
+  Velocity q̇: -0.0121 | 0.2478 | -0.3487 | 0.3599
+
+[Derivative (Target) Statistics]
+  Mean: [ 0.064122 -0.015306]
+  Std:  [0.228089 0.247096]
+
+[Physics Verification]
+  Position-Velocity correlation: 0.0336 (weak, expected for oscillatory motion)
+  Velocity magnitude (train): mean=0.2245, std=0.1056
+-------------------------------------------
+
+Cell 5, output 1:
+Total dataset size    : 4000 points
+Active points (>1e-4) : 4000 points
+Dead points (≤1e-4)   : 0 (0.00%)
+
+Cell 5, output 2:
+[text/plain]
+<Figure size 1200x800 with 2 Axes>
+[image/png] (87665 encoded characters)
+
+Cell 5, output 3:
+[text/plain]
+<Figure size 1000x500 with 1 Axes>
+[image/png] (29085 encoded characters)
+
+Cell 6, output 1:
+GLNN configured : DOF=1  dt=0.0333s  EPS=0.001
+L-net           : 3x Dense(200)-Softplus → scalar (Lagrangian)
+F-net           : 3x Dense(200)-Softplus → 1D (Non-conservative Forces)
+
+Cell 7, output 1:
+Using device: cuda:0
+
+================================================================================
+                        STARTING MASS ENSEMBLE TRAINING                         
+================================================================================
+Device: cuda:0
+Ensemble Size: 6 systems
+
+━━━ Training System ━━━
+Stage 1: Warmup (10000 iterations)
+[Iter   500] Comb_Loss: 2.28e-02 | Sys MSEs: [3.44e-07, 2.03e-07, 3.05e-07, 2.92e-07, 4.56e-07, 1.31e-07] | Total Time: 0.42 min
+[Iter  1000] Comb_Loss: 2.08e-02 | Sys MSEs: [2.25e-07, 1.07e-07, 2.21e-07, 1.95e-07, 1.65e-07, 1.01e-07] | Total Time: 0.66 min
+[Iter  1500] Comb_Loss: 1.82e-02 | Sys MSEs: [1.75e-07, 1.17e-07, 1.45e-07, 2.06e-06, 8.49e-08, 7.19e-08] | Total Time: 0.90 min
+[Iter  2000] Comb_Loss: 1.56e-02 | Sys MSEs: [2.16e-07, 1.36e-06, 1.07e-07, 2.02e-08, 6.00e-08, 3.39e-07] | Total Time: 1.15 min
+[Iter  2500] Comb_Loss: 1.30e-02 | Sys MSEs: [4.93e-07, 1.85e-08, 1.25e-07, 4.15e-07, 4.14e-08, 3.51e-08] | Total Time: 1.40 min
+[Iter  3000] Comb_Loss: 1.08e-02 | Sys MSEs: [5.12e-08, 6.03e-09, 8.18e-08, 1.15e-07, 1.64e-07, 8.96e-09] | Total Time: 1.65 min
+[Iter  3500] Comb_Loss: 8.78e-03 | Sys MSEs: [1.55e-08, 1.39e-07, 1.98e-07, 9.52e-09, 9.28e-09, 6.08e-09] | Total Time: 1.90 min
+[Iter  4000] Comb_Loss: 7.09e-03 | Sys MSEs: [3.51e-08, 1.46e-09, 1.11e-07, 1.23e-08, 1.23e-08, 2.76e-08] | Total Time: 2.15 min
+[Iter  4500] Comb_Loss: 5.67e-03 | Sys MSEs: [2.33e-08, 1.51e-09, 1.11e-08, 4.79e-07, 2.33e-08, 5.16e-09] | Total Time: 2.41 min
+[Iter  5000] Comb_Loss: 4.51e-03 | Sys MSEs: [1.85e-05, 1.96e-09, 1.16e-06, 4.09e-06, 2.12e-07, 9.65e-09] | Total Time: 2.67 min
+[Iter  5500] Comb_Loss: 3.49e-03 | Sys MSEs: [5.04e-08, 1.83e-08, 8.44e-09, 1.13e-08, 8.22e-09, 8.54e-09] | Total Time: 2.94 min
+[Iter  6000] Comb_Loss: 2.67e-03 | Sys MSEs: [1.65e-08, 5.22e-09, 1.32e-06, 3.49e-07, 7.90e-09, 1.04e-08] | Total Time: 3.20 min
+[Iter  6500] Comb_Loss: 1.99e-03 | Sys MSEs: [6.44e-07, 3.66e-06, 2.43e-08, 2.46e-08, 1.29e-08, 1.22e-08] | Total Time: 3.47 min
+[Iter  7000] Comb_Loss: 1.45e-03 | Sys MSEs: [1.13e-08, 1.37e-08, 4.30e-06, 2.42e-07, 7.72e-08, 1.30e-08] | Total Time: 3.73 min
+[Iter  7500] Comb_Loss: 1.01e-03 | Sys MSEs: [1.28e-07, 1.54e-07, 8.44e-09, 1.94e-08, 2.57e-08, 9.89e-09] | Total Time: 4.00 min
+[Iter  8000] Comb_Loss: 6.86e-04 | Sys MSEs: [3.14e-08, 1.27e-08, 6.18e-07, 7.74e-09, 2.80e-08, 1.50e-08] | Total Time: 4.26 min
+[Iter  8500] Comb_Loss: 4.52e-04 | Sys MSEs: [1.37e-08, 1.02e-08, 6.89e-09, 1.10e-08, 1.86e-08, 9.52e-09] | Total Time: 4.52 min
+[Iter  9000] Comb_Loss: 3.14e-04 | Sys MSEs: [7.01e-09, 1.10e-08, 5.09e-08, 2.08e-06, 1.97e-05, 6.00e-09] | Total Time: 4.78 min
+[Iter  9500] Comb_Loss: 2.14e-04 | Sys MSEs: [7.19e-09, 3.03e-06, 6.13e-09, 2.12e-05, 1.77e-08, 8.31e-09] | Total Time: 5.05 min
+[Iter 10000] Comb_Loss: 1.29e-04 | Sys MSEs: [8.63e-09, 2.30e-08, 4.07e-07, 2.62e-09, 1.74e-08, 4.53e-08] | Total Time: 5.31 min
+
+✅ Ensemble Training complete.
+================================================================================
+Training complete in 5.37 minutes.
+Model object is available as `dnn`.
+Model weights are available as `final_params`.
+Loss history available as `loss_arr` (10000 points).
+================================================================================
+
+Cell 8, output 1:
+✓ Evaluation utilities loaded (JAX simplified wrapper - Single System Evaluation).
+
+Cell 9, output 1:
+Automatically selected best_sys_idx: 3 (Train MSE: 1.5658e-10)
+
+One-Step MSE:
+  Train: 1.5658e-10
+  Test:  1.5658e-10
+  Gap:   0.0%
+
+✓ Integrating LNN dynamics using ODE solver:
+  Initial condition: q=-0.0226, q̇=0.3596
+  Integration time: t ∈ [0.000, 10.000] seconds
+  Number of evaluation points: 201
+
+Cell 10, output 1:
+[text/plain]
+<Figure size 1500x800 with 6 Axes>
+[image/png] (241905 encoded characters)
+
+Cell 10, output 2:
+
+======================================================================
+         DAMPED HARMONIC OSCILLATOR - RK4 ROLLOUT DIAGNOSTICS         
+======================================================================
+Model:                ts_6 wc=0.001
+Short Trajectory:     201 timesteps (10.050 s)
+Mean position error:  2.9623e-04
+Max position error:   9.5093e-04
+Mean velocity error:  3.8448e-04
+Max velocity error:   9.2320e-04
+----------------------------------------------------------------------
+Long Trajectory (E):  1001 timesteps (50.000 s)
+System: ω=1.00, damping=0.0200
+
+Ground Truth Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.023996
+  Energy loss:    0.040913 (63.03%)
+
+Model Predicted Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.022792
+  Energy drift:   -0.042117
+  Energy loss:    0.042117 (64.89%)
+
+Energy Prediction Error:
+  Mean error:     7.333589e-04
+  Max error:      1.203973e-03
+======================================================================
+
+Cell 11, output 1:
+
+Training Summary:
+  System: ω=1.0, a=0.02
+  Data: 40 × 201 points
+  Train/Test: 4000 / 4000
+  Ensemble Size: 6 systems
+
+Performance (Evaluated on System 0):
+  Train MSE: 1.5658e-10
+  Test MSE:  1.5658e-10
+  Gap:       0.0%
+
+Model Size:
+  Per-System Parameters: 41,006
+  Total Ensemble Parameters: 246,036
+
+✓ GLNN MASS Ensemble training complete
+
+================================================================================
+
+ts6hybrid_jax_SHO_consensus0_01_sysidx0(1).ipynb
+Cell 1, output 1:
+✓ All required libraries imported and configured.
+
+Cell 2, output 1:
+Configured Damped Harmonic Motion Data (Paper Baseline) - JAX:
+  State: 1D [q, q_dot] | ω: 1.0 | a (damping): 0.02
+  Trajectories: 40 × 201 points = 8040 point pairs
+  Initial conditions: Uniform in [-1, 1]²
+
+Cell 3, output 1:
+Generating damped harmonic motion data (40 trajectories × 200 points)...
+✓ Data generated: 40 × 201 = 8000 pairs
+  Train/Test: 4000 / 4000
+  Reference trajectory (Trajectory 0): q₀=-0.0226, q̇₀=0.3596
+
+Cell 4, output 1:
+--- Damped Harmonic Motion Data Summary ---
+Physics Setup:
+  System: 1D Damped Harmonic Oscillator
+  EOM: q̈ + aq̇ + ω²q = 0  (where a=0.02, ω=1.0)
+  Initial conditions: Uniform in [-1, 1]²
+
+Dataset Configuration (matches GLNN paper Table 1):
+  Trajectories: 40
+  Points per trajectory: 201
+  Time step (dt): 0.05
+  Total point pairs: 8000
+  Train/Test split: 1:1 → Train=4000, Test=4000
+
+[Raw Statistics: Mean | Std | Min | Max]
+  Position q:  0.0648 | 0.2276 | -0.3433 | 0.3542
+  Velocity q̇: -0.0121 | 0.2478 | -0.3487 | 0.3599
+
+[Derivative (Target) Statistics]
+  Mean: [ 0.064122 -0.015306]
+  Std:  [0.228089 0.247096]
+
+[Physics Verification]
+  Position-Velocity correlation: 0.0336 (weak, expected for oscillatory motion)
+  Velocity magnitude (train): mean=0.2245, std=0.1056
+-------------------------------------------
+
+Cell 5, output 1:
+Total dataset size    : 4000 points
+Active points (>1e-4) : 4000 points
+Dead points (≤1e-4)   : 0 (0.00%)
+
+Cell 5, output 2:
+[text/plain]
+<Figure size 1200x800 with 2 Axes>
+[image/png] (87665 encoded characters)
+
+Cell 5, output 3:
+[text/plain]
+<Figure size 1000x500 with 1 Axes>
+[image/png] (29085 encoded characters)
+
+Cell 6, output 1:
+GLNN configured : DOF=1  dt=0.0333s  EPS=0.001
+L-net           : 3x Dense(200)-Softplus → scalar (Lagrangian)
+F-net           : 3x Dense(200)-Softplus → 1D (Non-conservative Forces)
+
+Cell 7, output 1:
+Using device: cuda:0
+
+================================================================================
+                        STARTING MASS ENSEMBLE TRAINING                         
+================================================================================
+Device: cuda:0
+Ensemble Size: 6 systems
+
+━━━ Training System ━━━
+Stage 1: Warmup (10000 iterations)
+[Iter   500] Comb_Loss: 2.28e-02 | Sys MSEs: [3.44e-07, 2.03e-07, 3.05e-07, 2.92e-07, 4.57e-07, 1.30e-07] | Total Time: 0.40 min
+[Iter  1000] Comb_Loss: 2.08e-02 | Sys MSEs: [2.25e-07, 1.07e-07, 2.21e-07, 1.95e-07, 1.65e-07, 1.00e-07] | Total Time: 0.65 min
+[Iter  1500] Comb_Loss: 1.82e-02 | Sys MSEs: [1.78e-07, 1.15e-07, 1.45e-07, 9.21e-07, 8.49e-08, 7.06e-08] | Total Time: 0.91 min
+[Iter  2000] Comb_Loss: 1.56e-02 | Sys MSEs: [9.34e-08, 5.61e-06, 1.07e-07, 1.77e-09, 6.00e-08, 2.29e-07] | Total Time: 1.17 min
+[Iter  2500] Comb_Loss: 1.30e-02 | Sys MSEs: [2.98e-07, 1.13e-07, 1.26e-07, 1.88e-08, 5.27e-07, 2.21e-08] | Total Time: 1.42 min
+[Iter  3000] Comb_Loss: 1.08e-02 | Sys MSEs: [2.20e-08, 2.32e-07, 8.24e-08, 7.34e-09, 1.45e-08, 2.73e-07] | Total Time: 1.67 min
+[Iter  3500] Comb_Loss: 8.78e-03 | Sys MSEs: [4.58e-08, 5.48e-07, 1.13e-07, 1.35e-08, 3.05e-09, 7.69e-08] | Total Time: 1.93 min
+[Iter  4000] Comb_Loss: 7.10e-03 | Sys MSEs: [3.39e-08, 1.40e-09, 3.54e-08, 5.18e-09, 4.40e-09, 3.51e-08] | Total Time: 2.18 min
+[Iter  4500] Comb_Loss: 5.67e-03 | Sys MSEs: [9.97e-08, 5.58e-08, 4.36e-07, 6.07e-09, 8.03e-09, 4.67e-09] | Total Time: 2.43 min
+[Iter  5000] Comb_Loss: 4.48e-03 | Sys MSEs: [3.14e-08, 1.78e-09, 1.98e-08, 8.83e-07, 2.09e-09, 6.69e-09] | Total Time: 2.69 min
+[Iter  5500] Comb_Loss: 3.49e-03 | Sys MSEs: [1.27e-07, 1.83e-09, 7.31e-09, 9.41e-09, 4.55e-08, 9.29e-09] | Total Time: 2.94 min
+[Iter  6000] Comb_Loss: 2.67e-03 | Sys MSEs: [1.96e-08, 7.31e-09, 1.60e-08, 1.27e-08, 7.34e-08, 1.67e-07] | Total Time: 3.20 min
+[Iter  6500] Comb_Loss: 1.99e-03 | Sys MSEs: [8.74e-07, 6.98e-09, 7.05e-08, 1.13e-07, 1.08e-08, 8.88e-09] | Total Time: 3.45 min
+[Iter  7000] Comb_Loss: 1.45e-03 | Sys MSEs: [3.27e-08, 3.00e-08, 2.56e-08, 7.78e-09, 1.75e-08, 8.05e-09] | Total Time: 3.70 min
+[Iter  7500] Comb_Loss: 1.04e-03 | Sys MSEs: [4.09e-08, 1.79e-07, 1.85e-07, 2.94e-08, 1.77e-08, 1.70e-05] | Total Time: 3.96 min
+[Iter  8000] Comb_Loss: 6.98e-04 | Sys MSEs: [4.19e-07, 1.06e-07, 3.32e-08, 7.94e-09, 3.30e-08, 7.22e-09] | Total Time: 4.21 min
+[Iter  8500] Comb_Loss: 4.62e-04 | Sys MSEs: [3.35e-08, 1.43e-08, 1.07e-08, 7.21e-09, 4.14e-08, 9.43e-09] | Total Time: 4.46 min
+[Iter  9000] Comb_Loss: 3.19e-04 | Sys MSEs: [1.04e-05, 1.12e-08, 6.31e-08, 5.66e-09, 4.07e-08, 9.46e-09] | Total Time: 4.72 min
+[Iter  9500] Comb_Loss: 2.07e-04 | Sys MSEs: [1.82e-08, 1.27e-08, 5.55e-07, 2.36e-07, 1.97e-08, 5.35e-08] | Total Time: 4.97 min
+[Iter 10000] Comb_Loss: 1.41e-04 | Sys MSEs: [8.06e-07, 1.23e-08, 3.72e-09, 2.50e-08, 1.40e-08, 1.22e-08] | Total Time: 5.23 min
+
+✅ Ensemble Training complete.
+================================================================================
+Training complete in 5.27 minutes.
+Model object is available as `dnn`.
+Model weights are available as `final_params`.
+Loss history available as `loss_arr` (10000 points).
+================================================================================
+
+Cell 8, output 1:
+✓ Evaluation utilities loaded (JAX simplified wrapper - Single System Evaluation).
+
+Cell 9, output 1:
+Automatically selected best_sys_idx: 2 (Train MSE: 2.1178e-10)
+
+One-Step MSE:
+  Train: 2.1178e-10
+  Test:  2.1178e-10
+  Gap:   0.0%
+
+✓ Integrating LNN dynamics using ODE solver:
+  Initial condition: q=-0.0226, q̇=0.3596
+  Integration time: t ∈ [0.000, 10.000] seconds
+  Number of evaluation points: 201
+
+Cell 10, output 1:
+[text/plain]
+<Figure size 1500x800 with 6 Axes>
+[image/png] (243077 encoded characters)
+
+Cell 10, output 2:
+
+======================================================================
+         DAMPED HARMONIC OSCILLATOR - RK4 ROLLOUT DIAGNOSTICS         
+======================================================================
+Model:                ts_6 wc=0.01
+Short Trajectory:     201 timesteps (10.050 s)
+Mean position error:  1.6519e-04
+Max position error:   4.7711e-04
+Mean velocity error:  2.4199e-04
+Max velocity error:   5.3256e-04
+----------------------------------------------------------------------
+Long Trajectory (E):  1001 timesteps (50.000 s)
+System: ω=1.00, damping=0.0200
+
+Ground Truth Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.023996
+  Energy loss:    0.040913 (63.03%)
+
+Model Predicted Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.024725
+  Energy drift:   -0.040184
+  Energy loss:    0.040184 (61.91%)
+
+Energy Prediction Error:
+  Mean error:     3.348758e-04
+  Max error:      7.289480e-04
+======================================================================
+
+Cell 11, output 1:
+
+Training Summary:
+  System: ω=1.0, a=0.02
+  Data: 40 × 201 points
+  Train/Test: 4000 / 4000
+  Ensemble Size: 6 systems
+
+Performance (Evaluated on System 0):
+  Train MSE: 2.1178e-10
+  Test MSE:  2.1178e-10
+  Gap:       0.0%
+
+Model Size:
+  Per-System Parameters: 41,006
+  Total Ensemble Parameters: 246,036
+
+✓ GLNN MASS Ensemble training complete
+
+================================================================================
+
+ts7hybrid_jax_SHO_consensus0_001_sysidx0(1).ipynb
+Cell 3, output 1:
+Generating damped harmonic motion data (40 trajectories × 200 points)...
+✓ Data generated: 40 × 201 = 8000 pairs
+  Train/Test: 4000 / 4000
+  Reference trajectory (Trajectory 0): q₀=-0.0226, q̇₀=0.3596
+
+Cell 4, output 1:
+--- Damped Harmonic Motion Data Summary ---
+Physics Setup:
+  System: 1D Damped Harmonic Oscillator
+  EOM: q̈ + aq̇ + ω²q = 0  (where a=0.02, ω=1.0)
+  Initial conditions: Uniform in [-1, 1]²
+
+Dataset Configuration (matches GLNN paper Table 1):
+  Trajectories: 40
+  Points per trajectory: 201
+  Time step (dt): 0.05
+  Total point pairs: 8000
+  Train/Test split: 1:1 → Train=4000, Test=4000
+
+[Raw Statistics: Mean | Std | Min | Max]
+  Position q:  0.0648 | 0.2276 | -0.3433 | 0.3542
+  Velocity q̇: -0.0121 | 0.2478 | -0.3487 | 0.3599
+
+[Derivative (Target) Statistics]
+  Mean: [ 0.064122 -0.015306]
+  Std:  [0.228089 0.247096]
+
+[Physics Verification]
+  Position-Velocity correlation: 0.0336 (weak, expected for oscillatory motion)
+  Velocity magnitude (train): mean=0.2245, std=0.1056
+-------------------------------------------
+
+Cell 5, output 1:
+Total dataset size    : 4000 points
+Active points (>1e-4) : 4000 points
+Dead points (≤1e-4)   : 0 (0.00%)
+
+Cell 5, output 2:
+[text/plain]
+<Figure size 1200x800 with 2 Axes>
+[image/png] (87665 encoded characters)
+
+Cell 5, output 3:
+[text/plain]
+<Figure size 1000x500 with 1 Axes>
+[image/png] (29085 encoded characters)
+
+Cell 6, output 1:
+GLNN configured : DOF=1  dt=0.0333s  EPS=0.001
+L-net           : 3x Dense(200)-Softplus → scalar (Lagrangian)
+F-net           : 3x Dense(200)-Softplus → 1D (Non-conservative Forces)
+
+Cell 7, output 1:
+Using device: cuda:0
+
+================================================================================
+                        STARTING MASS ENSEMBLE TRAINING                         
+================================================================================
+Device: cuda:0
+Ensemble Size: 7 systems
+
+━━━ Training System ━━━
+Stage 1: Warmup (10000 iterations)
+[Iter   500] Comb_Loss: 2.64e-02 | Sys MSEs: [3.37e-07, 1.96e-07, 3.10e-07, 2.72e-07, 4.34e-07, 1.39e-07, 6.53e-07] | Total Time: 0.46 min
+[Iter  1000] Comb_Loss: 2.40e-02 | Sys MSEs: [2.26e-07, 1.04e-07, 2.14e-07, 2.10e-07, 1.45e-07, 9.74e-08, 3.14e-07] | Total Time: 0.75 min
+[Iter  1500] Comb_Loss: 2.10e-02 | Sys MSEs: [2.48e-07, 2.90e-07, 1.44e-07, 5.34e-08, 8.29e-08, 6.59e-08, 1.44e-07] | Total Time: 1.04 min
+[Iter  2000] Comb_Loss: 1.79e-02 | Sys MSEs: [9.97e-08, 8.98e-06, 1.15e-07, 5.08e-08, 1.59e-07, 5.81e-08, 9.50e-08] | Total Time: 1.32 min
+[Iter  2500] Comb_Loss: 1.50e-02 | Sys MSEs: [5.56e-07, 2.50e-08, 1.24e-07, 1.86e-08, 1.54e-07, 3.65e-07, 6.71e-08] | Total Time: 1.60 min
+[Iter  3000] Comb_Loss: 1.23e-02 | Sys MSEs: [4.12e-07, 1.94e-09, 4.68e-08, 4.65e-09, 2.06e-08, 2.36e-08, 4.84e-08] | Total Time: 1.88 min
+[Iter  3500] Comb_Loss: 1.01e-02 | Sys MSEs: [1.18e-08, 6.34e-08, 5.13e-08, 1.32e-08, 4.19e-09, 1.12e-07, 3.22e-08] | Total Time: 2.17 min
+[Iter  4000] Comb_Loss: 8.12e-03 | Sys MSEs: [2.46e-08, 5.11e-08, 2.02e-08, 1.23e-08, 3.72e-09, 2.92e-09, 1.79e-08] | Total Time: 2.45 min
+[Iter  4500] Comb_Loss: 6.49e-03 | Sys MSEs: [1.71e-08, 1.09e-09, 6.71e-09, 9.35e-09, 3.88e-09, 1.48e-08, 4.26e-06] | Total Time: 2.74 min
+[Iter  5000] Comb_Loss: 5.14e-03 | Sys MSEs: [3.37e-08, 9.49e-06, 1.14e-08, 9.52e-08, 1.30e-07, 1.07e-08, 1.91e-08] | Total Time: 3.02 min
+[Iter  5500] Comb_Loss: 3.99e-03 | Sys MSEs: [1.27e-07, 6.01e-09, 7.58e-09, 1.48e-08, 2.08e-09, 1.58e-08, 6.22e-09] | Total Time: 3.30 min
+[Iter  6000] Comb_Loss: 3.05e-03 | Sys MSEs: [1.60e-08, 7.73e-09, 4.94e-08, 5.32e-07, 6.12e-07, 2.29e-08, 7.41e-09] | Total Time: 3.59 min
+[Iter  6500] Comb_Loss: 2.29e-03 | Sys MSEs: [1.18e-08, 1.66e-06, 1.76e-07, 1.95e-05, 1.64e-08, 1.08e-08, 1.23e-08] | Total Time: 3.87 min
+[Iter  7000] Comb_Loss: 1.65e-03 | Sys MSEs: [3.53e-08, 1.14e-08, 7.33e-09, 9.22e-09, 3.47e-07, 5.41e-08, 1.47e-08] | Total Time: 4.16 min
+[Iter  7500] Comb_Loss: 1.16e-03 | Sys MSEs: [3.77e-08, 1.18e-08, 3.47e-07, 1.36e-07, 2.60e-08, 1.32e-08, 1.31e-08] | Total Time: 4.44 min
+[Iter  8000] Comb_Loss: 7.89e-04 | Sys MSEs: [4.52e-08, 2.23e-08, 9.12e-07, 4.65e-08, 2.44e-08, 1.52e-07, 2.21e-08] | Total Time: 4.72 min
+[Iter  8500] Comb_Loss: 5.17e-04 | Sys MSEs: [2.07e-06, 1.88e-07, 3.19e-08, 6.11e-09, 2.20e-08, 6.17e-08, 1.12e-08] | Total Time: 5.00 min
+[Iter  9000] Comb_Loss: 3.45e-04 | Sys MSEs: [3.39e-08, 1.68e-08, 5.13e-09, 3.87e-09, 2.86e-08, 2.38e-07, 7.77e-06] | Total Time: 5.29 min
+[Iter  9500] Comb_Loss: 2.22e-04 | Sys MSEs: [8.75e-09, 1.29e-08, 3.19e-07, 5.13e-09, 2.86e-07, 6.13e-09, 1.92e-08] | Total Time: 5.57 min
+[Iter 10000] Comb_Loss: 1.78e-04 | Sys MSEs: [6.96e-09, 4.82e-07, 3.37e-09, 3.55e-09, 2.49e-08, 2.79e-05, 7.08e-08] | Total Time: 5.85 min
+
+✅ Ensemble Training complete.
+================================================================================
+Training complete in 5.98 minutes.
+Model object is available as `dnn`.
+Model weights are available as `final_params`.
+Loss history available as `loss_arr` (10000 points).
+================================================================================
+
+Cell 8, output 1:
+✓ Evaluation utilities loaded (JAX simplified wrapper - Single System Evaluation).
+
+Cell 9, output 1:
+Automatically selected best_sys_idx: 2 (Train MSE: 1.8969e-10)
+
+One-Step MSE:
+  Train: 4.8240e-10
+  Test:  4.8240e-10
+  Gap:   0.0%
+
+✓ Integrating LNN dynamics using ODE solver:
+  Initial condition: q=-0.0226, q̇=0.3596
+  Integration time: t ∈ [0.000, 10.000] seconds
+  Number of evaluation points: 201
+
+Cell 10, output 1:
+[text/plain]
+<Figure size 1500x800 with 6 Axes>
+[image/png] (241901 encoded characters)
+
+Cell 10, output 2:
+
+======================================================================
+         DAMPED HARMONIC OSCILLATOR - RK4 ROLLOUT DIAGNOSTICS         
+======================================================================
+Model:                ts_7 wc=0.001
+Short Trajectory:     201 timesteps (10.050 s)
+Mean position error:  7.4377e-04
+Max position error:   1.8948e-03
+Mean velocity error:  9.2165e-04
+Max velocity error:   2.0239e-03
+----------------------------------------------------------------------
+Long Trajectory (E):  1001 timesteps (50.000 s)
+System: ω=1.00, damping=0.0200
+
+Ground Truth Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.023996
+  Energy loss:    0.040913 (63.03%)
+
+Model Predicted Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.021947
+  Energy drift:   -0.042962
+  Energy loss:    0.042962 (66.19%)
+
+Energy Prediction Error:
+  Mean error:     1.348927e-03
+  Max error:      2.050169e-03
+======================================================================
+
+Cell 11, output 1:
+
+Training Summary:
+  System: ω=1.0, a=0.02
+  Data: 40 × 201 points
+  Train/Test: 4000 / 4000
+  Ensemble Size: 7 systems
+
+Performance (Evaluated on System 0):
+  Train MSE: 4.8240e-10
+  Test MSE:  4.8240e-10
+  Gap:       0.0%
+
+Model Size:
+  Per-System Parameters: 41,006
+  Total Ensemble Parameters: 287,042
+
+✓ GLNN MASS Ensemble training complete
+
+================================================================================
+
+ts7hybrid_jax_SHO_consensus0_01_sysidx0(1).ipynb
+Cell 3, output 1:
+Generating damped harmonic motion data (40 trajectories × 200 points)...
+✓ Data generated: 40 × 201 = 8000 pairs
+  Train/Test: 4000 / 4000
+  Reference trajectory (Trajectory 0): q₀=-0.0226, q̇₀=0.3596
+
+Cell 4, output 1:
+--- Damped Harmonic Motion Data Summary ---
+Physics Setup:
+  System: 1D Damped Harmonic Oscillator
+  EOM: q̈ + aq̇ + ω²q = 0  (where a=0.02, ω=1.0)
+  Initial conditions: Uniform in [-1, 1]²
+
+Dataset Configuration (matches GLNN paper Table 1):
+  Trajectories: 40
+  Points per trajectory: 201
+  Time step (dt): 0.05
+  Total point pairs: 8000
+  Train/Test split: 1:1 → Train=4000, Test=4000
+
+[Raw Statistics: Mean | Std | Min | Max]
+  Position q:  0.0648 | 0.2276 | -0.3433 | 0.3542
+  Velocity q̇: -0.0121 | 0.2478 | -0.3487 | 0.3599
+
+[Derivative (Target) Statistics]
+  Mean: [ 0.064122 -0.015306]
+  Std:  [0.228089 0.247096]
+
+[Physics Verification]
+  Position-Velocity correlation: 0.0336 (weak, expected for oscillatory motion)
+  Velocity magnitude (train): mean=0.2245, std=0.1056
+-------------------------------------------
+
+Cell 5, output 1:
+Total dataset size    : 4000 points
+Active points (>1e-4) : 4000 points
+Dead points (≤1e-4)   : 0 (0.00%)
+
+Cell 5, output 2:
+[text/plain]
+<Figure size 1200x800 with 2 Axes>
+[image/png] (87665 encoded characters)
+
+Cell 5, output 3:
+[text/plain]
+<Figure size 1000x500 with 1 Axes>
+[image/png] (29085 encoded characters)
+
+Cell 6, output 1:
+GLNN configured : DOF=1  dt=0.0333s  EPS=0.001
+L-net           : 3x Dense(200)-Softplus → scalar (Lagrangian)
+F-net           : 3x Dense(200)-Softplus → 1D (Non-conservative Forces)
+
+Cell 7, output 1:
+Using device: cuda:0
+
+================================================================================
+                        STARTING MASS ENSEMBLE TRAINING                         
+================================================================================
+Device: cuda:0
+Ensemble Size: 7 systems
+
+━━━ Training System ━━━
+Stage 1: Warmup (10000 iterations)
+[Iter   500] Comb_Loss: 2.64e-02 | Sys MSEs: [3.37e-07, 1.96e-07, 3.10e-07, 2.72e-07, 4.35e-07, 1.39e-07, 6.53e-07] | Total Time: 0.50 min
+[Iter  1000] Comb_Loss: 2.40e-02 | Sys MSEs: [2.26e-07, 1.04e-07, 2.14e-07, 2.10e-07, 1.45e-07, 9.74e-08, 3.14e-07] | Total Time: 0.80 min
+[Iter  1500] Comb_Loss: 2.10e-02 | Sys MSEs: [4.16e-07, 7.67e-08, 1.44e-07, 2.59e-07, 8.28e-08, 6.59e-08, 1.44e-07] | Total Time: 1.08 min
+[Iter  2000] Comb_Loss: 1.79e-02 | Sys MSEs: [1.19e-07, 5.16e-07, 1.15e-07, 2.50e-09, 1.62e-07, 1.85e-07, 9.49e-08] | Total Time: 1.36 min
+[Iter  2500] Comb_Loss: 1.50e-02 | Sys MSEs: [5.69e-07, 1.17e-08, 1.25e-07, 6.18e-09, 1.48e-07, 9.89e-08, 1.67e-07] | Total Time: 1.65 min
+[Iter  3000] Comb_Loss: 1.23e-02 | Sys MSEs: [1.32e-07, 1.05e-06, 4.65e-08, 4.37e-09, 5.03e-08, 1.82e-08, 1.37e-06] | Total Time: 1.94 min
+[Iter  3500] Comb_Loss: 1.01e-02 | Sys MSEs: [2.93e-08, 1.24e-09, 1.75e-07, 9.38e-09, 3.83e-09, 1.27e-07, 5.02e-08] | Total Time: 2.22 min
+[Iter  4000] Comb_Loss: 8.12e-03 | Sys MSEs: [3.33e-08, 2.33e-09, 2.40e-08, 1.47e-07, 2.11e-08, 1.63e-06, 4.18e-07] | Total Time: 2.51 min
+[Iter  4500] Comb_Loss: 6.52e-03 | Sys MSEs: [4.35e-07, 1.10e-09, 6.66e-09, 4.32e-09, 7.79e-09, 6.73e-07, 2.57e-05] | Total Time: 2.79 min
+[Iter  5000] Comb_Loss: 5.14e-03 | Sys MSEs: [1.40e-06, 1.73e-09, 9.32e-06, 9.81e-09, 4.65e-07, 9.20e-08, 9.62e-08] | Total Time: 3.08 min
+[Iter  5500] Comb_Loss: 4.01e-03 | Sys MSEs: [2.16e-08, 2.95e-09, 2.86e-06, 1.33e-07, 1.80e-09, 3.09e-08, 1.55e-05] | Total Time: 3.36 min
+[Iter  6000] Comb_Loss: 3.06e-03 | Sys MSEs: [1.71e-07, 7.87e-09, 1.12e-08, 7.62e-08, 9.01e-09, 6.79e-06, 1.26e-08] | Total Time: 3.64 min
+[Iter  6500] Comb_Loss: 2.28e-03 | Sys MSEs: [1.26e-08, 8.63e-09, 2.86e-06, 3.11e-06, 4.37e-07, 6.48e-09, 8.42e-08] | Total Time: 3.93 min
+[Iter  7000] Comb_Loss: 1.65e-03 | Sys MSEs: [2.34e-08, 1.44e-08, 6.06e-09, 1.73e-08, 1.79e-07, 1.08e-08, 1.54e-08] | Total Time: 4.21 min
+[Iter  7500] Comb_Loss: 1.15e-03 | Sys MSEs: [3.82e-08, 1.82e-08, 1.63e-07, 6.33e-09, 8.17e-07, 1.13e-08, 1.62e-08] | Total Time: 4.50 min
+[Iter  8000] Comb_Loss: 7.79e-04 | Sys MSEs: [6.20e-09, 1.27e-08, 7.59e-09, 8.64e-09, 6.46e-08, 1.10e-08, 1.10e-08] | Total Time: 4.78 min
+[Iter  8500] Comb_Loss: 5.06e-04 | Sys MSEs: [8.84e-09, 5.49e-08, 6.52e-08, 3.88e-07, 2.21e-08, 7.59e-09, 7.30e-09] | Total Time: 5.06 min
+[Iter  9000] Comb_Loss: 3.28e-04 | Sys MSEs: [2.88e-08, 1.34e-08, 3.34e-06, 4.68e-07, 3.36e-08, 5.09e-08, 7.16e-09] | Total Time: 5.35 min
+[Iter  9500] Comb_Loss: 2.96e-04 | Sys MSEs: [1.40e-07, 7.79e-05, 3.84e-09, 4.99e-06, 1.11e-08, 2.95e-09, 3.09e-09] | Total Time: 5.63 min
+[Iter 10000] Comb_Loss: 1.57e-04 | Sys MSEs: [2.12e-08, 1.51e-08, 3.92e-06, 8.47e-06, 2.51e-08, 1.02e-08, 3.48e-09] | Total Time: 5.91 min
+
+✅ Ensemble Training complete.
+================================================================================
+Training complete in 5.92 minutes.
+Model object is available as `dnn`.
+Model weights are available as `final_params`.
+Loss history available as `loss_arr` (10000 points).
+================================================================================
+
+Cell 8, output 1:
+✓ Evaluation utilities loaded (JAX simplified wrapper - Single System Evaluation).
+
+Cell 9, output 1:
+Automatically selected best_sys_idx: 6 (Train MSE: 1.6045e-10)
+
+One-Step MSE:
+  Train: 1.0860e-09
+  Test:  1.0860e-09
+  Gap:   0.0%
+
+✓ Integrating LNN dynamics using ODE solver:
+  Initial condition: q=-0.0226, q̇=0.3596
+  Integration time: t ∈ [0.000, 10.000] seconds
+  Number of evaluation points: 201
+
+Cell 10, output 1:
+[text/plain]
+<Figure size 1500x800 with 6 Axes>
+[image/png] (240893 encoded characters)
+
+Cell 10, output 2:
+
+======================================================================
+         DAMPED HARMONIC OSCILLATOR - RK4 ROLLOUT DIAGNOSTICS         
+======================================================================
+Model:                ts_7 wc=0.01
+Short Trajectory:     201 timesteps (10.050 s)
+Mean position error:  1.3375e-03
+Max position error:   3.4690e-03
+Mean velocity error:  1.5001e-03
+Max velocity error:   3.7325e-03
+----------------------------------------------------------------------
+Long Trajectory (E):  1001 timesteps (50.000 s)
+System: ω=1.00, damping=0.0200
+
+Ground Truth Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.023996
+  Energy loss:    0.040913 (63.03%)
+
+Model Predicted Energy Evolution:
+  Initial energy: 0.064909
+  Final energy:   0.020677
+  Energy drift:   -0.044232
+  Energy loss:    0.044232 (68.14%)
+
+Energy Prediction Error:
+  Mean error:     2.256927e-03
+  Max error:      3.365431e-03
+======================================================================
+
+Cell 11, output 1:
+
+Training Summary:
+  System: ω=1.0, a=0.02
+  Data: 40 × 201 points
+  Train/Test: 4000 / 4000
+  Ensemble Size: 7 systems
+
+Performance (Evaluated on System 0):
+  Train MSE: 1.0860e-09
+  Test MSE:  1.0860e-09
+  Gap:       0.0%
+
+Model Size:
+  Per-System Parameters: 41,006
+  Total Ensemble Parameters: 287,042
+
+✓ GLNN MASS Ensemble training complete
