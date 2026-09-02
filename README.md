@@ -27,14 +27,6 @@ The following experiment directories are included in their entirety:
 These directories contain the implementations, notebooks, training procedures,
 evaluation code, and supporting experiment files used in the study.
 
-## Intentionally Excluded
-
-The following project directories are intentionally not included in this
-repository:
-
-- `JCP_Paper_files/`
-- `MLST_Paper/`
-
 ## Experimental Scope
 
 The accompanying study evaluates CORE across:
@@ -66,7 +58,7 @@ used for the study. Exact numerical reproduction may additionally depend on:
 Clone the repository:
 
 ```bash
-git clone https://github.com/DasAnup356/CORE-Physics-Informed-Ensembles.git
+git clone https://github.com/VIsual-Intelligence-Tech-Adv-Lab/CORE-Physics-Informed-Ensembles.git
 cd CORE-Physics-Informed-Ensembles
 ```
 
