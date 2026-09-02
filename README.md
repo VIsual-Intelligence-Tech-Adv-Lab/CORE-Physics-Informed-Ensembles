@@ -2,7 +2,7 @@
 
 Code accompanying the paper:
 
-> **Consensus-driven Optimization for Regularized Ensembles: Robust Training Scheme for Physics Informed Neural Networks**
+> **Consensus-driven Optimization for Regularized Ensembles: A Training Scheme for Physics Informed Neural Networks**
 
 This repository contains the experimental implementation associated with
 **CORE (Consensus-driven Optimization for Regularized Ensembles)**, a joint
