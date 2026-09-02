@@ -90,6 +90,6 @@ CORE-Physics-Informed-Ensembles/
 If you use this code, please cite the associated paper:
 
 **Das Anup Kumar and Gaurav Kumar Nayak.**
-*Consensus-driven Optimization for Regularized Ensembles: Robust Training Scheme
+*Consensus-driven Optimization for Regularized Ensembles: A Training Scheme
 for Physics Informed Neural Networks.*
 
